@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://rechinese.ru
+
+# Sitemaps
+Sitemap: https://rechinese.ru/sitemap.xml
+Sitemap: https://rechinese.ru/server-sitemap.xml

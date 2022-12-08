@@ -1,0 +1,10 @@
+next-env.d.ts
+next.config.js
+postcss.config.js
+jest.config.ts
+jest.setup.ts
+.next
+coverage
+node_modules
+public
+cypress

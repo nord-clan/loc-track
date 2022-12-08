@@ -1,0 +1,25 @@
+{
+  "short_name": "NordClan",
+  "description": "NordClan",
+  "name": "NordClan",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#050709",
+  "background_color": "#050709",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icons/logo-200x200.png",
+      "sizes": "200x200",
+      "type": "image/png"
+    },
+    {
+      "src": "/maskable/maskable_icon_x200.png",
+      "sizes": "200x200",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
