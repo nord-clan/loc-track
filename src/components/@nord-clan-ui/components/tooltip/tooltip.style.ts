@@ -14,7 +14,6 @@ export const TooltipStyled = styled.div`
     max-width: 600px;
 
     color: ${({ theme }) => theme.palette.color.textInvert};
-    font-family: ${({ theme }) => theme.font.family.pinyin};
     font-weight: 400;
     font-size: 1rem;
 
