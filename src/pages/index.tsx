@@ -1,19 +1,15 @@
 import type { NextPageWithLayout } from './_app';
 import React from 'react';
+import { BackgroundWrapper } from '#/nord-clan';
 
 // Home component
 //* ------------------------------------------------------------------------------------------ *//
 const Home: NextPageWithLayout = () => {
-  return <div>blank</div>;
+  return (
+    <div>
+      <BackgroundWrapper />
+    </div>
+  );
 };
-
-export async function getServerSideProps() {
-  return {
-    redirect: {
-      permanent: true,
-      destination: '/glossary'
-    }
-  };
-}
 
 export default Home;

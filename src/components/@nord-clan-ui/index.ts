@@ -24,3 +24,6 @@ export { FormStore } from './components/form/form.store';
 //* - dialog - *//
 export { Dialog } from './components/dialog/dialog';
 export { BaseDialogStore } from './components/dialog/dialog.store';
+
+//* - background - *//
+export { BackgroundWrapper } from './components/background/background-wrapper';

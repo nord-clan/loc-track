@@ -84,7 +84,7 @@ export default class MyDocument extends Document<DocumentProps> {
             name="twitter:image"
             content={`${process.env.NEXT_SITE_URL ?? 'http://localhost:3000'}/image/meta.png`}
           />
-          <meta name="twitter:creator" content="@xSolare" />
+          <meta name="twitter:creator" content="@NordClan" />
 
           <meta property="og:type" content="website" />
           <meta property="og:title" content="NordClan" />
