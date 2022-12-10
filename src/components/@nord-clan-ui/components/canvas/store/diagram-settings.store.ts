@@ -1,39 +1,41 @@
+import type { Point } from '../node/node.interface';
+import type { CanvasStore } from './canvas.store';
+import type { IComponentDefinition, VisualComponent } from './visual-component-state.store';
+import type { VisualComponentWithDefault } from './visual-component-with-default.store';
 import { makeAutoObservable } from 'mobx';
-import { Point } from 'utils/point';
-import { createSvgBackground } from 'components/background/SvgBackground';
-import { VisualComponentWithDefault } from 'states/visualComponentWithDefault';
-import { RootStore } from 'states/rootStore';
-import { createDefaultMiniControl } from 'components/miniControl/MiniControlDefault';
-import { IComponentDefinition, VisualComponent } from 'states/visualComponentState';
-import { IUserInteraction, UserInteractionSettings } from 'states/userInteractionSettings';
 
 export class DiagramSettings {
-  private _backgroundComponentState: VisualComponentWithDefault<IBackgroundComponentProps>;
-  private _miniControlComponentState: VisualComponentWithDefault<IMiniControlComponentProps>;
+  private _backgroundComponentState: VisualComponentWithDefault<IBackgroundComponentProps> =
+    {} as VisualComponentWithDefault<IBackgroundComponentProps>;
+  private _miniControlComponentState: VisualComponentWithDefault<IMiniControlComponentProps> =
+    {} as VisualComponentWithDefault<IMiniControlComponentProps>;
   private _zoomInterval: Point = defaultZoomInterval;
   private _zoomToFitSettings: IZoomToFitSettings = defaultZoomToFitSettings;
-  private _userInteraction: UserInteractionSettings;
+  // private _userInteraction: UserInteractionSettings;
 
   constructor() {
-    this._backgroundComponentState = new VisualComponentWithDefault<IBackgroundComponentProps>(
-      createSvgBackground()
-    );
-    this._miniControlComponentState = new VisualComponentWithDefault<IMiniControlComponentProps>(
-      createDefaultMiniControl()
-    );
-    this._userInteraction = new UserInteractionSettings();
+    // this._backgroundComponentState = new VisualComponentWithDefault<IBackgroundComponentProps>(
+    //   createSvgBackground()
+    // );
+    // this._miniControlComponentState = new VisualComponentWithDefault<IMiniControlComponentProps>(
+    //   createDefaultMiniControl()
+    // );
+    // this._userInteraction = new UserInteractionSettings();
     makeAutoObservable(this);
   }
 
   import = (obj?: IDiagramSettings) => {
-    this._backgroundComponentState.import(obj?.backgroundComponent);
-    this._miniControlComponentState.import(obj?.miniControlComponent);
-    this.setZoomInterval(obj?.zoomInterval);
+    if (this._backgroundComponentState && this._miniControlComponentState) {
+      this._backgroundComponentState.import(obj?.backgroundComponent);
+      this._miniControlComponentState.import(obj?.miniControlComponent);
+      this.setZoomInterval(obj?.zoomInterval);
+    }
+
     this._zoomToFitSettings = {
       ...defaultZoomToFitSettings,
       ...obj?.zoomToFitSettings
     };
-    this._userInteraction.import(obj?.userInteraction);
+    // this._userInteraction.import(obj?.userInteraction);
   };
 
   get backgroundComponentState() {
@@ -52,13 +54,13 @@ export class DiagramSettings {
     return this._zoomToFitSettings;
   }
 
+  // get userInteraction() {
+  //   return this._userInteraction;
+  // }
+
   setZoomInterval = (value: Point | null | undefined) => {
     this._zoomInterval = value ?? defaultZoomInterval;
   };
-
-  get userInteraction() {
-    return this._userInteraction;
-  }
 }
 
 const defaultZoomInterval: Point = [0.1, 3];
@@ -70,24 +72,24 @@ const defaultZoomToFitSettings: IZoomToFitSettings = {
 
 export interface IDiagramSettings {
   backgroundComponent?:
-    | IComponentDefinition<IBackgroundComponentProps, any>
+    | IComponentDefinition<IBackgroundComponentProps, unknown>
     | VisualComponent<IBackgroundComponentProps>;
   miniControlComponent?:
-    | IComponentDefinition<IMiniControlComponentProps, any>
+    | IComponentDefinition<IMiniControlComponentProps, unknown>
     | VisualComponent<IMiniControlComponentProps>;
   zoomInterval?: Point;
   zoomToFitSettings?: Partial<IZoomToFitSettings>;
-  userInteraction?: Partial<IUserInteraction>;
+  // userInteraction?: Partial<IUserInteraction>;
 }
 
-export interface IBackgroundComponentProps<TSettings = any> {
+export interface IBackgroundComponentProps<TSettings = unknown> {
   diagramOffset: Point;
   diagramZoom: number;
   settings?: TSettings;
 }
 
-export interface IMiniControlComponentProps<TSettings = any> {
-  rootStore: RootStore;
+export interface IMiniControlComponentProps<TSettings = unknown> {
+  canvasStore: CanvasStore;
   settings?: TSettings;
 }
 

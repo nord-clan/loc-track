@@ -1,17 +1,22 @@
+import type { IDiagramSettings } from './diagram-settings.store';
+import { DiagramSettings } from './diagram-settings.store';
+import { DiagramState } from './diagram-state.store';
+
 export class CanvasStore {
   private _diagramState: DiagramState;
   private _diagramSettings: DiagramSettings;
 
   // private _nodesStore: NodesStore;
+  // private _nodesSettings: NodesSettings;
+  // private _callbacks: Callbacks;
+
   // private _linksStore: LinksStore;
   // private _selectionState: SelectionState;
   // private _dragState: DragState;
   // private _commandExecutor: CommandExecutor;
 
-  // private _nodesSettings: NodesSettings;
   // private _portsSettings: PortsSettings;
   // private _linksSettings: LinksSettings;
-  // private _callbacks: Callbacks;
 
   constructor() {
     console.log('CanvasStore');
@@ -69,26 +74,25 @@ export class CanvasStore {
   //   return this._commandExecutor;
   // }
 
-  // importState = (nodes?: INodeState[], links?: ILinkState[]) => {
+  // importState = (nodes?: INodeState[]) => {
   //   this._nodesStore.import(nodes);
-  //   this._linksStore.import(links);
   //   this._diagramState.reportWhenImportedStateRendered();
   // };
-
-  // export = (): { nodes: INodeExport[]; links: ILinkState[] } => ({
-  //   nodes: this._nodesStore.export(),
-  //   links: this._linksStore.export()
-  // });
 
   // importSettings = (settings?: ISettings) => {
   //   this._diagramSettings.import(settings?.diagram);
   //   this._nodesSettings.import(settings?.nodes);
   //   this._callbacks.import(settings?.callbacks);
   // };
+
+  // export = (): { nodes: INodeExport[]; links: ILinkState[] } => ({
+  //   nodes: this._nodesStore.export(),
+  //   links: this._linksStore.export()
+  // });
 }
 
-// export interface ISettings {
-//   diagram?: IDiagramSettings;
-//   nodes?: INodesSettings;
-//   callbacks?: ICallbacks;
-// }
+export interface ISettings {
+  diagram?: IDiagramSettings;
+  // nodes?: INodesSettings;
+  // callbacks?: ICallbacks;
+}

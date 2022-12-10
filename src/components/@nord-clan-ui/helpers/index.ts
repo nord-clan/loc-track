@@ -3,6 +3,7 @@ import type { ControlStore } from '../components/control.store';
 import type { MutableRefObject } from 'react';
 import { v4 } from 'uuid';
 import { useEffect, useMemo, useRef } from 'react';
+import { Point } from '../components/canvas/node/node.interface';
 
 export type TControllerRef<T> = MutableRefObject<T | undefined>;
 export type Size = 's' | 'm' | 'l';
@@ -61,3 +62,33 @@ export const useRequestIdAbort = (): string => {
   }, []);
   return requestId;
 };
+
+export interface IDictionary<T> {
+  [key: string]: T;
+}
+
+export function isNumber(value: unknown): value is number {
+  return Number.isFinite(value);
+}
+
+export function isObject(value: unknown): value is object {
+  return value != null && typeof value === 'object' && !Array.isArray(value);
+}
+
+export function isBoolean(value: unknown): value is boolean {
+  return value != null && typeof value === 'boolean';
+}
+
+export function clampValue(value: number, interval: Point) {
+  return Math.min(Math.max(value, interval[0]), interval[1]);
+}
+
+export function deepCopy<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value));
+}
+
+export function combineArrays<T>(...arrays: (T[] | undefined)[]): T[] {
+  const combined: T[] = [];
+  arrays.forEach((a) => a?.forEach((v) => v && combined.push(v)));
+  return combined;
+}

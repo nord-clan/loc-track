@@ -5,15 +5,23 @@ import { BackgroundWrapperStyled } from './background-wrapper.style';
 import { useCanvasStore } from '../../../hooks/store/useRootStore';
 
 export const BackgroundWrapper: FC = observer(() => {
-  const { diagramSettings, diagramState } = useCanvasStore();
+  const canvasStore = useCanvasStore();
+
+  if (!canvasStore) return null;
+
+  const { diagramSettings, diagramState } = canvasStore;
+
+  const { offset, zoom } = diagramState;
+  const {
+    backgroundComponentState: { settings, Component }
+  } = diagramSettings;
+
+  console.log('BackgroundWrapper');
+  console.log(offset, zoom, settings);
 
   return (
     <BackgroundWrapperStyled>
-      {/* <diagramSettings.backgroundComponentState.component
-        diagramOffset={diagramState.offset}
-        diagramZoom={diagramState.zoom}
-        settings={diagramSettings.backgroundComponentState.settings}
-      /> */}
+      {/* <Component diagramOffset={offset} diagramZoom={zoom} settings={settings} /> */}
     </BackgroundWrapperStyled>
   );
 });
