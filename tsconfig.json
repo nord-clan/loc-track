@@ -28,7 +28,7 @@
     "paths": {
       "#/*": ["./src/*"],
       "#/public/*": ["./public/*"],
-      "#/nord-clan": ["./src/components/@nord-clan-ui/index"]
+      "#/@nord-clan": ["./src/components/@nord-clan-ui/index"]
     }
   },
   "exclude": ["./node_modules/**/*"],
