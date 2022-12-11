@@ -1,22 +1,24 @@
+import { useGesture } from '@use-gesture/react';
 import { useCanvasStore } from '../store/useRootStore';
 import { useDiagramWheelHandler } from './useDiagramWheelHandler';
-import { useGesture } from '@use-gesture/react';
+import { useDiagramDragHandlers } from './useDiagramDragHandlers';
+import { useCallback } from 'react';
 
 export const useDiagramInteraction = () => {
   const { diagramState, diagramSettings } = useCanvasStore();
 
-  // TODO
-  // const cancelGesture = useCallback(
-  //   (event: { target: EventTarget | null }) => event.target !== diagramState.ref.current,
-  //   [diagramState.ref]
-  // );
+  const cancelGesture = useCallback(
+    (event: { target: EventTarget | null }) => event.target !== diagramState.ref.current,
+    [diagramState.ref]
+  );
 
-  // const dragHandlers = useDiagramDragHandlers(cancelGesture);
   // const pinchHandlers = useDiagramPinchHandlers(cancelGesture);
+  const dragHandlers = useDiagramDragHandlers(cancelGesture);
   const wheelHandler = useDiagramWheelHandler(diagramState);
 
   useGesture(
     {
+      ...dragHandlers,
       ...wheelHandler
     },
     {

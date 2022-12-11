@@ -5,8 +5,10 @@ import { BackgroundWrapper } from '../background/background-wrapper';
 import { observer } from 'mobx-react-lite';
 import { DigramInnerStyled } from './diagram-inner.style';
 import { useDiagramInteraction } from '../../../hooks/interactions/useDiagramInteraction';
+import { deepCopy } from '#/components/@nord-clan-ui/helpers';
 import { generateTransform } from '../../../helpers/transformation';
-import { NodesLayer } from '../node/nodes-layer';
+import { ControlWrapper } from '../control/control-wrapper';
+// import { NodesLayer } from '../node/nodes-layer';
 
 export interface IDiagramInnerProps extends PropsWithChildren {
   diagramStyles?: React.CSSProperties;
@@ -25,14 +27,16 @@ export const DigramInner: FC<IDiagramInnerProps> = observer((props) => {
   });
 
   const { offset, zoom } = store.diagramState;
-  // const transform = generateTransform(offset, zoom);
-  console.log('>', offset, zoom);
+  const transform = generateTransform(offset, zoom);
+
+  console.log('>', transform, deepCopy(offset), deepCopy(zoom));
 
   return (
     <DigramInnerStyled ref={ref} style={diagramStyles} data-zoom={zoom}>
-      {/* <BackgroundWrapper /> */}
+      <BackgroundWrapper />
       {/* <NodesLayer transform={transform} /> */}
       {children}
+      <ControlWrapper />
     </DigramInnerStyled>
   );
 });

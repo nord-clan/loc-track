@@ -5,6 +5,12 @@ import type { Point } from './point';
 import { v4 } from 'uuid';
 import { useEffect, useMemo, useRef } from 'react';
 
+export type BoundingBox = {
+  topLeftCorner: Point;
+  bottomRightCorner: Point;
+  size: Point;
+};
+
 export type TControllerRef<T> = MutableRefObject<T | undefined>;
 export type Size = 's' | 'm' | 'l';
 export const getId = (): string => {

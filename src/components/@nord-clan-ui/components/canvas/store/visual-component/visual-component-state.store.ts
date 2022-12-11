@@ -25,15 +25,19 @@ export class VisualComponentState<TComponentProps, TSettings> {
       | IComponentDefinition<TComponentProps, TSettings>
       | VisualComponent<TComponentProps>
   ) => {
-    if ('component' in newComponent) {
-      const _newComponent = newComponent as IComponentDefinition<TComponentProps, TSettings>;
-      this._component = _newComponent.Component;
-      this._settings = _newComponent.settings ?? null;
-    } else {
-      const _newComponent = newComponent as VisualComponent<TComponentProps>;
-      this._component = _newComponent;
-      this._settings = null;
-    }
+    const _newComponent = newComponent as IComponentDefinition<TComponentProps, TSettings>;
+    this._component = _newComponent.Component;
+    this._settings = _newComponent.settings ?? null;
+
+    // if ('Сomponent' in newComponent) {
+    //   const _newComponent = newComponent as IComponentDefinition<TComponentProps, TSettings>;
+    //   this._component = _newComponent.Component;
+    //   this._settings = _newComponent.settings ?? null;
+    // } else {
+    //   const _newComponent = newComponent as VisualComponent<TComponentProps>;
+    //   this._component = _newComponent;
+    //   this._settings = null;
+    // }
   };
 
   get Component() {

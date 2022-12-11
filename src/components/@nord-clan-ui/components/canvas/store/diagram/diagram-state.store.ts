@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import type {
   IInteractionTranslate,
   IInteractionTranslateAndZoom
 } from '../../../../hooks/interactions/common';
 import type { Point } from '../../../../helpers/point';
 import type { CanvasStore } from '../canvas.store';
+import type { BoundingBox } from '../../../../helpers/index';
 import { addPoints, multiplyPoint, subtractPoints } from '../../../../helpers/point';
 import { HtmlElement } from '../../html-element';
 import { clampValue, deepCopy } from '../../../../helpers/index';
@@ -39,8 +41,7 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
     });
 
   reportWhenImportedStateRendered = () => {
-    // eslint-disable-next-line no-plusplus
-    this._renderImportedRequestId++;
+    this._renderImportedRequestId += 1;
   };
 
   get renderImportedRequestId() {
@@ -113,76 +114,76 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
     return attr ? Number(attr) : null;
   }
 
-  // /**
-  //  * Get position on Diagram in its coordinates system (including zoom) by mouse/touch position.
-  //  * @param pointerPosition position of mouse or finger on the screen
-  //  */
-  // getPositionByPointer = (pointerPosition: Point): Point => {
-  //   const diagRect = this.ref.current?.getBoundingClientRect();
-  //   if (diagRect) {
-  //     return multiplyPoint(
-  //       subtractPoints(pointerPosition, [diagRect.left, diagRect.top], this.offset),
-  //       1 / this.zoom
-  //     );
-  //   }
-  //   return [0, 0];
-  // };
+  /**
+   * Get position on Diagram in its coordinates system (including zoom) by mouse/touch position.
+   * @param pointerPosition position of mouse or finger on the screen
+   */
+  getPositionByPointer = (pointerPosition: Point): Point => {
+    const diagRect = this.ref.current?.getBoundingClientRect();
+    if (diagRect) {
+      return multiplyPoint(
+        subtractPoints(pointerPosition, [diagRect.left, diagRect.top], this.offset),
+        1 / this.zoom
+      );
+    }
+    return [0, 0];
+  };
 
-  // zoomToFit = () => {
-  //   const nodesBoundingBox = this._getNodesBoundingBoxWithPadding();
+  zoomToFit = () => {
+    const nodesBoundingBox = this._getNodesBoundingBoxWithPadding();
 
-  //   const diagramSize = this.ref.boundingRect?.size;
-  //   if (!diagramSize) {
-  //     console.warn('Cannot retrieve diagram size');
-  //     return;
-  //   }
+    const diagramSize = this.ref.boundingRect?.size;
+    if (!diagramSize) {
+      console.warn('Cannot retrieve diagram size');
+      return;
+    }
 
-  //   const newZoom = clampValue(
-  //     calculateNewZoomToFitBoundingBox(diagramSize, nodesBoundingBox),
-  //     this._rootStore.diagramSettings.zoomToFitSettings.zoomInterval
-  //   );
-  //   this.setZoom(newZoom);
+    const newZoom = clampValue(
+      calculateNewZoomToFitBoundingBox(diagramSize, nodesBoundingBox),
+      this._store.diagramSettings.zoomToFitSettings.zoomInterval
+    );
+    this.setZoom(newZoom);
 
-  //   this.setOffset(calculateOffsetToCenterBoundingBox(diagramSize, newZoom, nodesBoundingBox));
-  // };
+    this.setOffset(calculateOffsetToCenterBoundingBox(diagramSize, newZoom, nodesBoundingBox));
+  };
 
-  // private _getNodesBoundingBoxWithPadding = (): BoundingBox => {
-  //   const nodesBoundingBox = this._rootStore.nodesStore.getNodesBoundingBox();
-  //   const { padding } = this._rootStore.diagramSettings.zoomToFitSettings;
-  //   nodesBoundingBox.topLeftCorner = subtractPoints(nodesBoundingBox.topLeftCorner, padding);
-  //   nodesBoundingBox.bottomRightCorner = addPoints(nodesBoundingBox.bottomRightCorner, padding);
-  //   nodesBoundingBox.size = subtractPoints(
-  //     nodesBoundingBox.bottomRightCorner,
-  //     nodesBoundingBox.topLeftCorner
-  //   );
+  private _getNodesBoundingBoxWithPadding = (): BoundingBox => {
+    const nodesBoundingBox = this._store.nodeStore.getNodesBoundingBox();
+    const { padding } = this._store.diagramSettings.zoomToFitSettings;
+    nodesBoundingBox.topLeftCorner = subtractPoints(nodesBoundingBox.topLeftCorner, padding);
+    nodesBoundingBox.bottomRightCorner = addPoints(nodesBoundingBox.bottomRightCorner, padding);
+    nodesBoundingBox.size = subtractPoints(
+      nodesBoundingBox.bottomRightCorner,
+      nodesBoundingBox.topLeftCorner
+    );
 
-  //   return nodesBoundingBox;
-  // };
+    return nodesBoundingBox;
+  };
 }
 
-// function calculateNewZoomToFitBoundingBox(diagramSize: Point, boundingBox: BoundingBox) {
-//   // Zoom to fit the largest size, horizontal or vertical
-//   const newZoom = Math.min(
-//     diagramSize[0] / boundingBox.size[0],
-//     diagramSize[1] / boundingBox.size[1]
-//   );
-//   return newZoom;
-// }
+function calculateNewZoomToFitBoundingBox(diagramSize: Point, boundingBox: BoundingBox) {
+  // Zoom to fit the largest size, horizontal or vertical
+  const newZoom = Math.min(
+    diagramSize[0] / boundingBox.size[0],
+    diagramSize[1] / boundingBox.size[1]
+  );
+  return newZoom;
+}
 
-// function calculateOffsetToCenterBoundingBox(
-//   diagramSize: Point,
-//   zoom: number,
-//   boundingBox: BoundingBox
-// ) {
-//   // Take zoom into account
-//   const contentSizeWithZoom = multiplyPoint(boundingBox.size, zoom);
-//   const topLeftCornerWithZoom = multiplyPoint(boundingBox.topLeftCorner, zoom);
-//   const diffBetweenDiagramAndContentSizes = subtractPoints(diagramSize, contentSizeWithZoom);
-//   return addPoints(
-//     multiplyPoint(topLeftCornerWithZoom, -1), // topLeft corner of content will be at topleft corner of diagram
-//     multiplyPoint(diffBetweenDiagramAndContentSizes, 1 / 2) // center content
-//   );
-// }
+function calculateOffsetToCenterBoundingBox(
+  diagramSize: Point,
+  zoom: number,
+  boundingBox: BoundingBox
+) {
+  // Take zoom into account
+  const contentSizeWithZoom = multiplyPoint(boundingBox.size, zoom);
+  const topLeftCornerWithZoom = multiplyPoint(boundingBox.topLeftCorner, zoom);
+  const diffBetweenDiagramAndContentSizes = subtractPoints(diagramSize, contentSizeWithZoom);
+  return addPoints(
+    multiplyPoint(topLeftCornerWithZoom, -1), // topLeft corner of content will be at topleft corner of diagram
+    multiplyPoint(diffBetweenDiagramAndContentSizes, 1 / 2) // center content
+  );
+}
 
 export interface IDiagramState {
   offset: Point;

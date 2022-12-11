@@ -9,11 +9,11 @@ export class CanvasStore {
   private _diagramSettingsStore: DiagramSettingsStore;
   private _nodeStore: NodeStore;
   private _nodeSettings: NodeSettings;
+  // private _selectionState: SelectionState;
 
   // private _callbacks: Callbacks;
 
   // private _linksStore: LinksStore;
-  // private _selectionState: SelectionState;
   // private _dragState: DragState;
   // private _commandExecutor: CommandExecutor;
 
@@ -26,7 +26,6 @@ export class CanvasStore {
     this._nodeStore = new NodeStore(this);
     this._nodeSettings = new NodeSettings();
 
-    console.log('CanvasStore', this._diagramSettingsStore, this._diagramStateStore);
     // this._callbacks = new Callbacks(this);
     // this._commandExecutor = new CommandExecutor(this);
     // this._selectionState = new SelectionState();

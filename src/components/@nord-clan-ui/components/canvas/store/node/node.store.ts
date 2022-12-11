@@ -131,34 +131,34 @@ export class NodeStore {
   //   return this._nodes.get(nodeId);
   // };
 
-  // /**
-  //  * @returns Values are calculated without zoom taking into account, that is, the same as zoom would be '1'
-  //  */
-  // getNodesBoundingBox = (): BoundingBox => {
-  //   let topLeftCorner: Point = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
-  //   let bottomRightCorner: Point = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
+  /**
+   * @returns Values are calculated without zoom taking into account, that is, the same as zoom would be '1'
+   */
+  getNodesBoundingBox = (): BoundingBox => {
+    let topLeftCorner: Point = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
+    let bottomRightCorner: Point = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
 
-  //   this._nodes.forEach((node) => {
-  //     const pos = node.position;
-  //     const size = node.ref.sizeExcludingZoom ?? [0, 0];
+    this._nodes.forEach((node) => {
+      const pos = node.position;
+      const size = node.ref.sizeExcludingZoom ?? [0, 0];
 
-  //     topLeftCorner = [Math.min(topLeftCorner[0], pos[0]), Math.min(topLeftCorner[1], pos[1])];
+      topLeftCorner = [Math.min(topLeftCorner[0], pos[0]), Math.min(topLeftCorner[1], pos[1])];
 
-  //     bottomRightCorner = [
-  //       Math.max(bottomRightCorner[0], pos[0] + size[0]),
-  //       Math.max(bottomRightCorner[1], pos[1] + size[1])
-  //     ];
-  //   });
+      bottomRightCorner = [
+        Math.max(bottomRightCorner[0], pos[0] + size[0]),
+        Math.max(bottomRightCorner[1], pos[1] + size[1])
+      ];
+    });
 
-  //   if (this._nodes.size == 0) {
-  //     topLeftCorner = [0, 0];
-  //     bottomRightCorner = [100, 100];
-  //   }
+    if (this._nodes.size == 0) {
+      topLeftCorner = [0, 0];
+      bottomRightCorner = [100, 100];
+    }
 
-  //   return {
-  //     topLeftCorner,
-  //     bottomRightCorner,
-  //     size: subtractPoints(bottomRightCorner, topLeftCorner)
-  //   };
-  // };
+    return {
+      topLeftCorner,
+      bottomRightCorner,
+      size: subtractPoints(bottomRightCorner, topLeftCorner)
+    };
+  };
 }
