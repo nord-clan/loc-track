@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class VisualComponentState<TComponentProps, TSettings> {
-  private _component: VisualComponent<TComponentProps> = {} as VisualComponent<TComponentProps>;
+  private _component: VisualComponent<TComponentProps>;
   private _settings: TSettings | null = null;
 
   constructor(
@@ -26,10 +26,12 @@ export class VisualComponentState<TComponentProps, TSettings> {
       | VisualComponent<TComponentProps>
   ) => {
     if ('component' in newComponent) {
-      this._component = newComponent.component;
-      this._settings = newComponent.settings ?? null;
+      const _newComponent = newComponent as IComponentDefinition<TComponentProps, TSettings>;
+      this._component = _newComponent.Component;
+      this._settings = _newComponent.settings ?? null;
     } else {
-      this._component = newComponent;
+      const _newComponent = newComponent as VisualComponent<TComponentProps>;
+      this._component = _newComponent;
       this._settings = null;
     }
   };
@@ -37,6 +39,7 @@ export class VisualComponentState<TComponentProps, TSettings> {
   get Component() {
     return this._component;
   }
+
   get settings() {
     return this._settings;
   }
@@ -50,6 +53,6 @@ export interface IVisualComponentProps<TEntity, TSettings> {
 export type VisualComponent<TComponentProps> = React.FunctionComponent<TComponentProps>;
 
 export interface IComponentDefinition<TComponentProps, TSettings> {
-  component: VisualComponent<TComponentProps>;
+  Component: VisualComponent<TComponentProps>;
   settings?: TSettings;
 }

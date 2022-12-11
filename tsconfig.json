@@ -2,7 +2,6 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "noEmit": true,
-    "strict": true,
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",
@@ -13,7 +12,8 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "noImplicitAny": false,
+    // "strict": true,
+    // "noImplicitAny": false,
     "useDefineForClassFields": true,
     "typeRoots": ["./node_modules/@types"],
     "lib": ["dom"],
@@ -23,6 +23,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
+
+    "noImplicitReturns": false,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,
 
     "baseUrl": ".",
     "paths": {

@@ -7,10 +7,10 @@ import { DigramInner } from './diagram-inner';
 export type IDiagramProps = IDiagramInnerProps & IDiagramContextProps;
 
 export function Diagram(props: IDiagramProps) {
-  const { initState, storeRef, children } = props;
+  const { children, ...rest } = props;
 
   return (
-    <DiagramContext initState={initState} storeRef={storeRef}>
+    <DiagramContext {...rest}>
       <DigramInner>{children}</DigramInner>
     </DiagramContext>
   );

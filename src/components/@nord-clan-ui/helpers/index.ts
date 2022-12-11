@@ -1,9 +1,9 @@
 import type { FormStore } from '../components/form/form.store';
 import type { ControlStore } from '../components/control.store';
 import type { MutableRefObject } from 'react';
+import type { Point } from './point';
 import { v4 } from 'uuid';
 import { useEffect, useMemo, useRef } from 'react';
-import { Point } from '../components/canvas/node/node.interface';
 
 export type TControllerRef<T> = MutableRefObject<T | undefined>;
 export type Size = 's' | 'm' | 'l';

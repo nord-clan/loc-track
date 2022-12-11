@@ -1,7 +1,7 @@
-import { makeAutoObservable } from 'mobx';
+import type { IDictionary } from '../../../../helpers/index';
 import type { IComponentDefinition, VisualComponent } from './visual-component-state.store';
+import { makeAutoObservable } from 'mobx';
 import { VisualComponentState } from './visual-component-state.store';
-import type { IDictionary } from '../../../helpers/index';
 
 export class VisualComponents<TSettings, TComponentProps> {
   private _defaultComponents: IDictionary<VisualComponentState<TComponentProps, TSettings>>;

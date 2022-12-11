@@ -7,8 +7,6 @@ import { useCanvasStore } from '../../../hooks/store/useRootStore';
 export const BackgroundWrapper: FC = observer(() => {
   const canvasStore = useCanvasStore();
 
-  if (!canvasStore) return null;
-
   const { diagramSettings, diagramState } = canvasStore;
 
   const { offset, zoom } = diagramState;
@@ -21,7 +19,7 @@ export const BackgroundWrapper: FC = observer(() => {
 
   return (
     <BackgroundWrapperStyled>
-      {/* <Component diagramOffset={offset} diagramZoom={zoom} settings={settings} /> */}
+      <Component diagramOffset={offset} diagramZoom={zoom} settings={settings} />
     </BackgroundWrapperStyled>
   );
 });

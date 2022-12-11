@@ -1,5 +1,5 @@
-import { makeAutoObservable } from 'mobx';
 import type { IComponentDefinition, VisualComponent } from './visual-component-state.store';
+import { makeAutoObservable } from 'mobx';
 import { VisualComponentState } from './visual-component-state.store';
 
 export class VisualComponentWithDefault<TComponentProps> {

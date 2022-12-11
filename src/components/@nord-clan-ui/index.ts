@@ -30,4 +30,4 @@ export * from './components/canvas/diagram/diagram-context';
 export * from './components/canvas/diagram/diagram-inner';
 
 //* - node - *//
-export * from './components/canvas/node/node-settings';
+export * from './components/canvas/store/node/node-settings';

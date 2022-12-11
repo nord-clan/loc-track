@@ -1,4 +1,4 @@
-export type Point = [number, number];
+import type { Point } from '../../../../helpers/point';
 
 export interface INodeStateWithoutId {
   label?: string;

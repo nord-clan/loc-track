@@ -1,13 +1,15 @@
-import type { IDiagramSettings } from './diagram-settings.store';
-import { DiagramSettings } from './diagram-settings.store';
-import { DiagramState } from './diagram-state.store';
+import type { IDiagramSettings } from './diagram/diagram-settings.store';
+import { DiagramSettingsStore } from './diagram/diagram-settings.store';
+import { NodeSettings } from './node/node-settings';
+import { DiagramStateStore } from './diagram/diagram-state.store';
+import { NodeStore } from './node/node.store';
 
 export class CanvasStore {
-  private _diagramState: DiagramState;
-  private _diagramSettings: DiagramSettings;
+  private _diagramStateStore: DiagramStateStore;
+  private _diagramSettingsStore: DiagramSettingsStore;
+  private _nodeStore: NodeStore;
+  private _nodeSettings: NodeSettings;
 
-  // private _nodesStore: NodesStore;
-  // private _nodesSettings: NodesSettings;
   // private _callbacks: Callbacks;
 
   // private _linksStore: LinksStore;
@@ -19,35 +21,36 @@ export class CanvasStore {
   // private _linksSettings: LinksSettings;
 
   constructor() {
-    console.log('CanvasStore');
-    this._diagramSettings = new DiagramSettings();
-    this._diagramState = new DiagramState(this);
-    // this._nodesSettings = new NodesSettings();
+    this._diagramSettingsStore = new DiagramSettingsStore();
+    this._diagramStateStore = new DiagramStateStore(this);
+    this._nodeStore = new NodeStore(this);
+    this._nodeSettings = new NodeSettings();
+
+    console.log('CanvasStore', this._diagramSettingsStore, this._diagramStateStore);
     // this._callbacks = new Callbacks(this);
     // this._commandExecutor = new CommandExecutor(this);
-    // this._nodesStore = new NodesStore(this);
     // this._selectionState = new SelectionState();
     // this._dragState = new DragState(this._selectionState, this._callbacks);
   }
 
   get diagramSettings() {
-    return this._diagramSettings;
+    return this._diagramSettingsStore;
   }
 
   get diagramState() {
-    return this._diagramState;
+    return this._diagramStateStore;
   }
 
-  // get nodesStore() {
-  //   return this._nodesStore;
-  // }
+  get nodeStore() {
+    return this._nodeStore;
+  }
+
+  get nodeSettings() {
+    return this._nodeSettings;
+  }
 
   // get linksStore() {
   //   return this._linksStore;
-  // }
-
-  // get nodesSettings() {
-  //   return this._nodesSettings;
   // }
 
   // get linksSettings() {
@@ -75,13 +78,13 @@ export class CanvasStore {
   // }
 
   // importState = (nodes?: INodeState[]) => {
-  //   this._nodesStore.import(nodes);
+  //   this._nodeStore.import(nodes);
   //   this._diagramState.reportWhenImportedStateRendered();
   // };
 
   // importSettings = (settings?: ISettings) => {
+  //   this._nodsSettings.import(settings?.nodes);
   //   this._diagramSettings.import(settings?.diagram);
-  //   this._nodesSettings.import(settings?.nodes);
   //   this._callbacks.import(settings?.callbacks);
   // };
 
