@@ -5,8 +5,8 @@ import type { FC, PropsWithChildren } from 'react';
 import { DefaultStyled } from '#/components/layouts/default/default.style';
 
 //* Components
-import Header from '../../header/header';
 import { store } from '#/store';
+import Header from '#/components/header/header';
 
 // Default layout
 //* ------------------------------------------------------------------------------------------ *//

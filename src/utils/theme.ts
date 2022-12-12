@@ -15,7 +15,7 @@ export const pxToRem = (pxValue: number, baseFontSize: number): string =>
   `${pxValue / baseFontSize || 16}rem`;
 
 const sizes = {
-  header: { height: '50px' }
+  header: { height: '0px' }
 };
 
 const font = {

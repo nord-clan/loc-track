@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '#/store';
-import { HeaderStyled } from './header.style';
+import { HeaderFlatStyled } from './header-flat.style';
 import Image from 'next/image';
 
 //* Components
@@ -19,28 +19,37 @@ const themeIcon = new Map<ThemeVarious, JSX.Element>([
   ['blue', <IoMdRainy key={3} />]
 ]);
 
-// Header component
+// Header flat component
 //* ------------------------------------------------------------------------------------------ *//
-const Header: FC = observer(() => {
+const HeaderFlat: FC = observer(() => {
   const { appStore } = useStore();
   const {
     state: { theme },
-    switchTheme
+    switchTheme,
+    headerOpacity
   } = appStore;
 
   return (
-    <HeaderStyled>
-      <div className="logo">
-        <Link href="/">
-          <Image alt="logo" src="/assets/nord-clan.svg" width={50} height={50} />
-        </Link>
-      </div>
-      <div className="control">
-        <span onClick={switchTheme}>{themeIcon.get(theme)}</span>
-      </div>
+    <HeaderFlatStyled opacity={headerOpacity}>
+      <nav>
+        <div>
+          <ul>
+            <li>
+              <Link href="/">
+                <Image alt="Vercel logo" src="/assets/nord-clan.svg" width={50} height={50} />
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li onClick={switchTheme}>{themeIcon.get(theme)}</li>
+          </ul>
+        </div>
+      </nav>
       {/* <Menu /> */}
-    </HeaderStyled>
+    </HeaderFlatStyled>
   );
 });
 
-export default Header;
+export default HeaderFlat;

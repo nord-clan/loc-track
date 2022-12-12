@@ -1,73 +1,54 @@
 import styled from '@emotion/styled';
 
-interface IHeaderStyledProps {
-  opacity: number;
-}
-
-export const HeaderStyled = styled.header<IHeaderStyledProps>`
+export const HeaderStyled = styled.header`
   position: fixed;
+  z-index: 3;
 
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid ${({ theme }) => theme.palette.border.header};
-  height: ${({ theme }) => theme.sizes.header.height};
-  background-color: ${({ theme }) => theme.palette.bg.headerBlur};
-  -webkit-backdrop-filter: blur(8px) saturate(180%);
-  backdrop-filter: blur(8px) saturate(180%);
-  transition: transform 0.5s;
+  .logo {
+    position: fixed;
 
-  left: 0;
-  top: 0;
-  z-index: 10;
+    left: 0;
+    top: 0;
 
-  width: 100%;
-
-  > nav {
-    width: 100%;
-    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 
-    &::before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-image: ${({ theme }) => theme.palette.bg.header};
-      z-index: 0;
-      content: '';
-      opacity: ${({ opacity }) => opacity};
+    background-color: ${({ theme }) => theme.palette.bg.headerBlur};
+    -webkit-backdrop-filter: blur(8px) saturate(180%);
+    backdrop-filter: blur(8px) saturate(180%);
+    border-right: 1px solid ${({ theme }) => theme.palette.border.header};
+    border-bottom: 1px solid ${({ theme }) => theme.palette.border.header};
+    border-radius: 0 0 100px 0;
+    width: 70px;
+    height: 70px;
+
+    > a {
+      height: 100%;
+      width: 100%;
     }
   }
 
-  * ul {
-    width: 100%;
-    height: 100%;
+  .control {
+    position: fixed;
+
+    right: 0;
+    top: 0;
 
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
 
-    margin: 0;
-    padding: 0 10px;
-  }
+    background-color: ${({ theme }) => theme.palette.bg.headerBlur};
+    -webkit-backdrop-filter: blur(8px) saturate(180%);
+    backdrop-filter: blur(8px) saturate(180%);
+    border-left: 1px solid ${({ theme }) => theme.palette.border.header};
+    border-bottom: 1px solid ${({ theme }) => theme.palette.border.header};
 
-  * li {
-    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 0 0 0 25px;
 
-    height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
-    span {
-      margin-right: 4px;
-    }
 
     svg {
       min-width: 20px;
@@ -75,7 +56,6 @@ export const HeaderStyled = styled.header<IHeaderStyledProps>`
       cursor: pointer;
     }
   }
-
   * {
     color: ${({ theme }) => theme.palette.color.header};
     font-size: 1rem;
