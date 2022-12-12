@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { BackgroundWrapperStyled } from './background-wrapper.style';
 import { useCanvasStore } from '../../../hooks/store/useRootStore';
-import Office from '../../../../../../public/assets/office.svg';
 
 export const BackgroundWrapper: FC = observer(() => {
   const canvasStore = useCanvasStore();
