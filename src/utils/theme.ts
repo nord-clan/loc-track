@@ -39,7 +39,8 @@ const palette = {
     subText: '#535353',
     textInvert: '#e4e4e4',
     subTextInvert: '#6d6e6f',
-    header: '#e0e0e0'
+    header: '#e0e0e0',
+    panel: '#e4e4e4'
   },
   bg: {
     main: '#eeeeee',
@@ -49,7 +50,9 @@ const palette = {
     highlight: '#6db6ff',
     header: 'linear-gradient(to top right,  #232325, #292929, #232325)',
     headerBlur: 'rgba(24, 24, 24, 0.7)',
-    canvas: '#eeeeee'
+    canvas: '#eeeeee',
+    panelGradient: 'linear-gradient(to left,  #232325, #292929, #232325)',
+    panel: '#232325'
   },
   border: {
     header: '#7e7e7e',
@@ -68,7 +71,8 @@ const paletteDark = {
     subText: '#ababab',
     textInvert: '#e4e4e4',
     subTextInvert: '#6d6e6f',
-    header: '#e0e0e0'
+    header: '#e0e0e0',
+    panel: '#e4e4e4'
   },
   bg: {
     main: '#1e1f20',
@@ -78,7 +82,9 @@ const paletteDark = {
     highlight: '#f65341',
     header: 'linear-gradient(to top right,  #232325, #292929, #232325)',
     headerBlur: 'rgba(24, 24, 24, 0.7)',
-    canvas: '#1e1f20'
+    canvas: '#1e1f20',
+    panelGradient: 'linear-gradient(to left, #232325, #292929, #232325)',
+    panel: '#232325'
   },
   border: {
     header: '#474747',
@@ -97,7 +103,8 @@ const paletteBlue = {
     subText: '#959595',
     textInvert: '#e4e4e4',
     subTextInvert: '#6d6e6f',
-    header: '#e0e0e0'
+    header: '#e0e0e0',
+    panel: '#e4e4e4'
   },
   bg: {
     main: '#0d1117',
@@ -107,12 +114,14 @@ const paletteBlue = {
     highlight: '#6db6ff',
     header: 'linear-gradient(to top right,  #161b22, #1d242d, #161b22)',
     headerBlur: 'rgba(24, 24, 24, 0.7)',
-    canvas: '#0d1117'
+    canvas: '#0d1117',
+    panelGradient: 'linear-gradient(to left,  #161b22, #1d242d, #161b22)',
+    panel: '#161b22'
   },
   border: {
     header: '#161b22',
     title: '#5d6a7e',
-    content: '#161b22'
+    content: '#1e2937'
   },
   shadow: {
     itemContent: '0 0 5px rgba(0, 0, 0, 0.25)'

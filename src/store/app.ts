@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeAutoObservable, makeObservable, observable } from 'mobx';
 import { isClientSide } from '#/utils/env';
 
 import type { IScrollRecord, IViewportRecord } from './types';
