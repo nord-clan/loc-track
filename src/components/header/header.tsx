@@ -11,7 +11,7 @@ import type { ThemeVarious } from '#/contexts/theme';
 
 //* icons
 import { GiSun, GiNightSleep } from 'react-icons/gi';
-import { IoMdRainy } from 'react-icons/io';
+import { IoMdRainy, IoIosApps, IoIosAppstore } from 'react-icons/io';
 
 const themeIcon = new Map<ThemeVarious, JSX.Element>([
   ['light', <GiSun key={1} />],
@@ -22,7 +22,7 @@ const themeIcon = new Map<ThemeVarious, JSX.Element>([
 // Header component
 //* ------------------------------------------------------------------------------------------ *//
 const Header: FC = observer(() => {
-  const { appStore } = useStore();
+  const { appStore, leftPanelStore, rightPanelStore } = useStore();
   const {
     state: { theme },
     switchTheme
@@ -36,6 +36,12 @@ const Header: FC = observer(() => {
         </Link>
       </div>
       <div className="control">
+        <span onClick={leftPanelStore.switchVisible}>
+          <IoIosApps />
+        </span>
+        <span onClick={rightPanelStore.switchVisible}>
+          <IoIosAppstore />
+        </span>
         <span onClick={switchTheme}>{themeIcon.get(theme)}</span>
       </div>
       {/* <Menu /> */}

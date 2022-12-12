@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeAutoObservable, makeObservable } from 'mobx';
 import { isClientSide } from '#/utils/env';
 
 import type { IScrollRecord, IViewportRecord } from './types';
@@ -35,12 +35,7 @@ export default class AppUIStore {
       isNarrowThanLaptop: computed
     });
 
-    makeObservable(this.state, {
-      theme: observable,
-      mediaType: observable,
-      scroll: observable,
-      viewport: observable
-    });
+    makeAutoObservable(this.state);
   }
 
   setScroll = (scroll: IScrollRecord): IScrollRecord => (this.state.scroll = scroll);
