@@ -14,13 +14,19 @@ const Home: NextPageWithLayout = () => {
         initState={{
           nodes: [
             {
-              id: 'node_1',
-              label: 'Nord Clan',
-              position: [0, 0]
+              id: 'num1',
+              position: [100, 100],
+              type: 'number'
+            },
+            {
+              id: 'num2',
+              position: [200, 300],
+              type: 'number'
             }
           ]
         }}
       />
+
       {/* <img src="http://localhost:3000/assets/ggd.svg" alt="ad" /> */}
     </HomeStyled>
   );

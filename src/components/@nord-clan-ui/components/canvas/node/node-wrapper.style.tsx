@@ -12,5 +12,5 @@ export const NodeWrapperStyled = styled.div<INodeWrapperStyledProps>`
   height: fit-content;
   pointer-events: auto;
 
-  transform: translate ${({ position }) => `${position[0]}px, ${position[1]}px`};
+  transform: translate(${({ position }) => `${position[0]}px, ${position[1]}px`});
 `;
