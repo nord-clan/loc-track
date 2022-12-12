@@ -4,7 +4,9 @@ import type { IComponentDefinition } from '../store/visual-component/visual-comp
 import type { CornerPosition } from '../../../helpers/position';
 import { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
-import { ControlDefaultButtonStyled } from './control-default.style';
+import { ControlDefaultButtonStyled, ControlDefaultStyled } from './control-default.style';
+import { TbResize } from 'react-icons/tb';
+import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 
 const ControlDefault: FC<IControlComponentProps<IControlDefaultSettings>> = observer((props) => {
   const {
@@ -27,17 +29,17 @@ const ControlDefault: FC<IControlComponentProps<IControlDefaultSettings>> = obse
   if (Object.values(buttons).every((v) => v === false)) return null;
 
   return (
-    <div style={style}>
+    <ControlDefaultStyled {...(style as ReturnType<typeof getOffsetStyles>)}>
       <Button isVisible={!!zoomIn} size={buttonsSize} onClick={diagramState.zoomIn}>
-        +
+        <AiOutlineZoomIn />
       </Button>
       <Button isVisible={!!zoomOut} size={buttonsSize} onClick={diagramState.zoomOut}>
-        -
+        <AiOutlineZoomOut />
       </Button>
       <Button isVisible={!!zoomToFit} size={buttonsSize} onClick={diagramState.zoomToFit}>
-        <span>F</span>
+        <TbResize />
       </Button>
-    </div>
+    </ControlDefaultStyled>
   );
 });
 

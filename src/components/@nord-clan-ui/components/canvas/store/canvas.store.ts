@@ -1,35 +1,26 @@
-import type { IDiagramSettings } from './diagram/diagram-settings.store';
+import type { INodeExport, INodeState } from './node/node-state.store';
+import type { INodesSettings } from './node/node-settings.store';
+import type { IDiagramState } from './diagram/diagram-state.store';
+import type { ICallbacks } from './callbacks.store';
 import { DiagramSettingsStore } from './diagram/diagram-settings.store';
-import { NodeSettings } from './node/node-settings';
+import { NodeSettingsStore } from './node/node-settings.store';
 import { DiagramStateStore } from './diagram/diagram-state.store';
 import { NodeStore } from './node/node.store';
+import { CallbacksStore } from './callbacks.store';
 
 export class CanvasStore {
   private _diagramStateStore: DiagramStateStore;
   private _diagramSettingsStore: DiagramSettingsStore;
   private _nodeStore: NodeStore;
-  private _nodeSettings: NodeSettings;
-  // private _selectionState: SelectionState;
-
-  // private _callbacks: Callbacks;
-
-  // private _linksStore: LinksStore;
-  // private _dragState: DragState;
-  // private _commandExecutor: CommandExecutor;
-
-  // private _portsSettings: PortsSettings;
-  // private _linksSettings: LinksSettings;
+  private _nodeSettingsStore: NodeSettingsStore;
+  private _callbacksStore: CallbacksStore;
 
   constructor() {
     this._diagramSettingsStore = new DiagramSettingsStore();
     this._diagramStateStore = new DiagramStateStore(this);
     this._nodeStore = new NodeStore(this);
-    this._nodeSettings = new NodeSettings();
-
-    // this._callbacks = new Callbacks(this);
-    // this._commandExecutor = new CommandExecutor(this);
-    // this._selectionState = new SelectionState();
-    // this._dragState = new DragState(this._selectionState, this._callbacks);
+    this._nodeSettingsStore = new NodeSettingsStore();
+    this._callbacksStore = new CallbacksStore(this);
   }
 
   get diagramSettings() {
@@ -45,56 +36,31 @@ export class CanvasStore {
   }
 
   get nodeSettings() {
-    return this._nodeSettings;
+    return this._nodeSettingsStore;
   }
 
-  // get linksStore() {
-  //   return this._linksStore;
-  // }
+  get callbacks() {
+    return this._callbacksStore;
+  }
 
-  // get linksSettings() {
-  //   return this._linksSettings;
-  // }
+  importState = (nodes?: INodeState[]) => {
+    this._nodeStore.import(nodes);
+    this._diagramStateStore.reportWhenImportedStateRendered();
+  };
 
-  // get portsSettings() {
-  //   return this._portsSettings;
-  // }
+  importSettings = (settings?: ISettings) => {
+    this._nodeSettingsStore.import(settings?.nodes);
+    this._diagramStateStore.import(settings?.diagram);
+    this._callbacksStore.import(settings?.callbacks);
+  };
 
-  // get callbacks() {
-  //   return this._callbacks;
-  // }
-
-  // get selectionState() {
-  //   return this._selectionState;
-  // }
-
-  // get dragState() {
-  //   return this._dragState;
-  // }
-
-  // get commandExecutor() {
-  //   return this._commandExecutor;
-  // }
-
-  // importState = (nodes?: INodeState[]) => {
-  //   this._nodeStore.import(nodes);
-  //   this._diagramState.reportWhenImportedStateRendered();
-  // };
-
-  // importSettings = (settings?: ISettings) => {
-  //   this._nodsSettings.import(settings?.nodes);
-  //   this._diagramSettings.import(settings?.diagram);
-  //   this._callbacks.import(settings?.callbacks);
-  // };
-
-  // export = (): { nodes: INodeExport[]; links: ILinkState[] } => ({
-  //   nodes: this._nodesStore.export(),
-  //   links: this._linksStore.export()
-  // });
+  export = (): { nodes: INodeExport[] } => ({
+    nodes: this._nodeStore.export()
+  });
 }
 
 export interface ISettings {
-  diagram?: IDiagramSettings;
-  // nodes?: INodesSettings;
-  // callbacks?: ICallbacks;
+  diagram?: IDiagramState;
+  nodes?: INodesSettings;
+  callbacks?: ICallbacks;
 }

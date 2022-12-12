@@ -1,7 +1,7 @@
 import type { NextPageWithLayout } from './_app';
 import React from 'react';
-import { Diagram } from '#/components/@nord-clan-ui/components/canvas/diagram/diagram';
 import { HomeStyled } from '#/styles/pages/home.style';
+import { Diagram } from '#/@nord-clan';
 
 // Home component
 //* ------------------------------------------------------------------------------------------ *//
@@ -13,8 +13,8 @@ const Home: NextPageWithLayout = () => {
           nodes: [
             {
               id: 'node_1',
-              label: 'Node 1',
-              position: [300, 300]
+              label: 'Nord Clan',
+              position: [0, 0]
             }
           ]
         }}

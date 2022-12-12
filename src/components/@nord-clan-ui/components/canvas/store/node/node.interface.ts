@@ -1,4 +1,6 @@
 import type { Point } from '../../../../helpers/point';
+import type { VisualComponent } from '../visual-component/visual-component-state.store';
+import type { NodeState } from './node-state.store';
 
 export interface INodeStateWithoutId {
   label?: string;
@@ -29,3 +31,16 @@ export interface INodeStateDiff {
   isSelectionEnabled?: boolean;
   isDragEnabled?: boolean;
 }
+
+export interface INodeDefaultSettings {
+  idk?: unknown;
+  InnerNode?: VisualComponent<{ node: NodeState }>;
+  removeDefaultClasses?: true;
+  classes?: NodeDefaultSettingsByStates<string[]>;
+  style?: NodeDefaultSettingsByStates<React.CSSProperties>;
+}
+
+export type NodeDefaultState = 'base' | 'hovered' | 'selected' | 'selected-hovered';
+export type NodeDefaultSettingsByStates<TValue> = {
+  [key in NodeDefaultState]?: TValue;
+};

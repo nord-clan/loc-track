@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import type { IDiagramContextProps } from './diagram-context';
 import type { IDiagramInnerProps } from './diagram-inner';
 import { DiagramContext } from './diagram-context';
@@ -6,7 +6,7 @@ import { DigramInner } from './diagram-inner';
 
 export type IDiagramProps = IDiagramInnerProps & IDiagramContextProps;
 
-export function Diagram(props: IDiagramProps) {
+export const Diagram: FC<IDiagramProps> = (props) => {
   const { children, ...rest } = props;
 
   return (
@@ -14,4 +14,4 @@ export function Diagram(props: IDiagramProps) {
       <DigramInner>{children}</DigramInner>
     </DiagramContext>
   );
-}
+};

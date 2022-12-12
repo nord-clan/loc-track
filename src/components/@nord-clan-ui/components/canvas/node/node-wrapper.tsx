@@ -6,6 +6,9 @@ import { NodeWrapperStyled } from './node-wrapper.style';
 
 export const NodeWrapper: FC<{ node: NodeState }> = observer(({ node }) => {
   const {
+    id,
+    position,
+    ref,
     componentDefinition: { Component, settings }
   } = node;
 
@@ -14,12 +17,7 @@ export const NodeWrapper: FC<{ node: NodeState }> = observer(({ node }) => {
 
   return (
     <NodeContext.Provider value={node}>
-      <NodeWrapperStyled
-        id={node.id}
-        style={{
-          transform: `translate(${node.position[0]}px, ${node.position[1]}px)`
-        }}
-        ref={node.ref}>
+      <NodeWrapperStyled position={position} id={id} ref={ref}>
         <Component entity={node} settings={settings} />
       </NodeWrapperStyled>
     </NodeContext.Provider>

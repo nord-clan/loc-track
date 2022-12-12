@@ -14,8 +14,6 @@ export const BackgroundWrapper: FC = observer(() => {
     backgroundComponentState: { settings, Component }
   } = diagramSettings;
 
-  console.log('BackgroundWrapper > ', settings, Component);
-
   return (
     <BackgroundWrapperStyled>
       <Component diagramOffset={offset} diagramZoom={zoom} settings={settings} />
