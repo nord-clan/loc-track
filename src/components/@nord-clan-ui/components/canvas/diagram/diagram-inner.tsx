@@ -8,6 +8,7 @@ import { useDiagramInteraction } from '../../../hooks/interactions/useDiagramInt
 import { generateTransform } from '../../../helpers/transformation';
 import { ControlWrapper } from '../control/control-wrapper';
 import { NodesLayer } from '../node/nodes-layer';
+import { LayoutLayer } from '../layout/layout-layer';
 
 export interface IDiagramInnerProps extends PropsWithChildren {
   diagramStyles?: React.CSSProperties;
@@ -31,9 +32,10 @@ export const DigramInner: FC<IDiagramInnerProps> = observer((props) => {
   return (
     <DigramInnerStyled ref={ref} style={diagramStyles} data-zoom={zoom}>
       <BackgroundWrapper />
-      <ControlWrapper />
+      <LayoutLayer transform={transform} />
       <NodesLayer transform={transform} />
       {children}
+      <ControlWrapper />
     </DigramInnerStyled>
   );
 });

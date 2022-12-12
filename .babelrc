@@ -16,5 +16,5 @@
       "compact": false
     }
   },
-  "plugins": ["@emotion"]
+  "plugins": ["@emotion", "inline-react-svg"]
 }

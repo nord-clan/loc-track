@@ -13,7 +13,8 @@ export const PanelStyled = styled.div<IPanelStyledProps>`
     ${side === 'left' ? 'right' : 'left'}: 0;
   `}
   top: 0;
-  z-index: 1;
+  display: flow-root;
+  z-index: 5;
 
   min-height: 100vh;
   height: 100%;

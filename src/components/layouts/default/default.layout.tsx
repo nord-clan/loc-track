@@ -25,8 +25,8 @@ const DefaultLayout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <Header />
       <DefaultStyled>{children}</DefaultStyled>
+      <Header />
     </>
   );
 };

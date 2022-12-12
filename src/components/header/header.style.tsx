@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 export const HeaderStyled = styled.header`
   position: fixed;
+  top: 0;
   z-index: 3;
 
   .logo {
@@ -41,18 +42,19 @@ export const HeaderStyled = styled.header`
     border-left: 1px solid ${({ theme }) => theme.palette.border.header};
     border-bottom: 1px solid ${({ theme }) => theme.palette.border.header};
 
-    width: 50px;
+    width: 100px;
     height: 50px;
     border-radius: 0 0 0 25px;
 
     display: flex;
+    gap: 5px;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
     svg {
-      min-width: 20px;
-      min-height: 20px;
+      min-width: 22px;
+      min-height: 22px;
       cursor: pointer;
     }
   }

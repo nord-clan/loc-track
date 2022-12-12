@@ -36,6 +36,11 @@ const nextConfig = {
       config.watchOptions.aggregateTimeout = 300;
     }
 
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack']
+    });
+
     return config;
   }
 };
