@@ -11,6 +11,5 @@ export const DefaultStyled = styled.main`
   background-color: ${({ theme }) => theme.palette.bg.main};
   color: ${({ theme }) => theme.palette.color.text};
 
-  padding: 10px;
   padding-top: ${({ theme }) => theme.sizes.header.height};
 `;

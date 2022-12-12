@@ -3,13 +3,13 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { HeaderStyled } from '#/components/header/header.style';
 import { useStore } from '#/store';
+import Image from 'next/image';
 
 //* Components
 import Link from 'next/link';
 import type { ThemeVarious } from '#/contexts/theme';
 
 //* icons
-import { SiDungeonsanddragons } from 'react-icons/si';
 import { GiSun, GiNightSleep } from 'react-icons/gi';
 import { IoMdRainy } from 'react-icons/io';
 
@@ -25,15 +25,9 @@ const Header: FC = observer(() => {
   const { appStore } = useStore();
   const {
     state: { theme },
-    setTheme,
+    switchTheme,
     headerOpacity
   } = appStore;
-
-  const handleClickTheme = () => {
-    const arr: ThemeVarious[] = ['blue', 'light', 'dark'];
-    const i = arr.indexOf(theme);
-    setTheme(arr[i === arr.length - 1 ? 0 : i + 1]);
-  };
 
   return (
     <HeaderStyled opacity={headerOpacity}>
@@ -42,17 +36,14 @@ const Header: FC = observer(() => {
           <ul>
             <li>
               <Link href="/">
-                <SiDungeonsanddragons />
+                <Image alt="Vercel logo" src="/assets/nord-clan.svg" width={50} height={50} />
               </Link>
-            </li>
-            <li>
-              <Link href="/">Главная</Link>
             </li>
           </ul>
         </div>
         <div>
           <ul>
-            <li onClick={handleClickTheme}>{themeIcon.get(theme)}</li>
+            <li onClick={switchTheme}>{themeIcon.get(theme)}</li>
           </ul>
         </div>
       </nav>

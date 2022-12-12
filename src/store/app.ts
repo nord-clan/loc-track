@@ -131,6 +131,12 @@ export default class AppUIStore {
     );
   };
 
+  switchTheme = () => {
+    const arr: ThemeVarious[] = ['blue', 'light', 'dark'];
+    const i = arr.indexOf(this.state.theme);
+    this.setTheme(arr[i === arr.length - 1 ? 0 : i + 1]);
+  };
+
   get headerOpacity() {
     const { pos } = this.state.scroll;
     const threshold = 100;
