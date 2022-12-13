@@ -35,3 +35,7 @@ export * from './components/canvas/store/node/node-settings.store';
 //* - panel - *//
 export * from './components/panel/panel';
 export * from './components/panel/panel.store';
+
+//* - search - *//
+export * from './components/search/search';
+export * from './components/search/search.store';

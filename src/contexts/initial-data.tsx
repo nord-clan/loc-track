@@ -3,6 +3,7 @@ import { useEffect, createContext, useMemo } from 'react';
 
 import { useStore } from '#/store/index';
 import type { IInitialData } from '#/types/common';
+import type { IUserModel } from '#/store/user.store';
 
 export const InitialContext = createContext({} as IInitialData);
 
@@ -12,7 +13,7 @@ type IInitialContextProvider = { value: IInitialData } & PropsWithChildren;
 //* ------------------------------------------------------------------------------------------ *//
 export const InitialContextProvider: FC<IInitialContextProvider> = ({ value, children }) => {
   const { userStore, appStore } = useStore();
-  userStore.setUser(value.user);
+  userStore.setUser(value.user as IUserModel);
   if (value.theme) appStore.setTheme(value.theme);
 
   useEffect(() => {

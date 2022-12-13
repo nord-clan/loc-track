@@ -1,7 +1,7 @@
 import { action, computed, makeAutoObservable, makeObservable } from 'mobx';
 import { isClientSide } from '#/utils/env';
 
-import type { IScrollRecord, IViewportRecord } from './types';
+import type { IScrollRecord, IViewportRecord } from './types.interface';
 import type { ThemeVarious } from '../contexts/theme';
 import { setCookie } from 'cookies-next';
 import axios from 'axios';
