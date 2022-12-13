@@ -96,6 +96,9 @@ module.exports = {
           {
             ts: 'never',
             tsx: 'never',
+            store: 'off',
+            interface: 'off',
+            style: 'off',
             scss: 'off'
           }
         ],

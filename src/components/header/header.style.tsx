@@ -11,18 +11,22 @@ export const HeaderStyled = styled.header`
     left: 0;
     top: 0;
 
-    display: flex;
-
     background-color: ${({ theme }) => theme.palette.bg.headerBlur};
     -webkit-backdrop-filter: blur(8px) saturate(180%);
     backdrop-filter: blur(8px) saturate(180%);
     border-right: 1px solid ${({ theme }) => theme.palette.border.header};
     border-bottom: 1px solid ${({ theme }) => theme.palette.border.header};
-    border-radius: 0 0 100px 0;
-    width: 70px;
-    height: 70px;
+    border-radius: 0 0 25px 0;
+    padding: 2px;
+    width: 130px;
+    height: 64px;
 
     > a {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+
+      padding: 0px;
       height: 100%;
       width: 100%;
     }

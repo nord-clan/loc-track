@@ -32,7 +32,7 @@ const Header: FC = observer(() => {
     <HeaderStyled>
       <div className="logo">
         <Link href="/">
-          <Image alt="logo" src="/assets/nord-clan.svg" width={50} height={50} />
+          <Image alt="Nord clan" src="/assets/nord-clan-bigger.svg" width={145} height={50} />
         </Link>
       </div>
       <div className="control">

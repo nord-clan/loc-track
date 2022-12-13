@@ -34,6 +34,7 @@
     "paths": {
       "#/*": ["./src/*"],
       "#/public/*": ["./public/*"],
+      "#/models/*": ["./src/types/models/*"],
       "#/@nord-clan": ["./src/components/@nord-clan-ui/index"]
     },
     "strict": false

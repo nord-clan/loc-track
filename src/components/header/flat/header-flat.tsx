@@ -36,7 +36,7 @@ const HeaderFlat: FC = observer(() => {
           <ul>
             <li>
               <Link href="/">
-                <Image alt="Vercel logo" src="/assets/nord-clan.svg" width={50} height={50} />
+                <Image alt="Nord Clan" src="/assets/nord-clan-bigger.svg" width={50} height={50} />
               </Link>
             </li>
           </ul>
