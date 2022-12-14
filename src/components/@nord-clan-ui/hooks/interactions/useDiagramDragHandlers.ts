@@ -39,7 +39,7 @@ export function useDiagramDragHandlers(
       onDragEnd: ({ tap }) => {
         if (activeRef.current) {
           if (tap) {
-            console.log('tap');
+            // console.log('tap');
           }
           activeRef.current = false;
         }

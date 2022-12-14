@@ -2,7 +2,7 @@ import React from 'react';
 import type { FC, PropsWithChildren } from 'react';
 
 //* Styles
-import { Panel, Search } from '#/@nord-clan/';
+import { Panel, Search } from '#/@nord-clan';
 import { useStore } from '#/store';
 
 // Home layout

@@ -13,8 +13,6 @@ export const Panel: FC<IPanelProps> = observer((props) => {
 
   const { isVisible } = state;
 
-  console.log('isVisible', isVisible);
-
   return (
     <PanelStyled isVisible={isVisible} side={side}>
       <section>{children}</section>

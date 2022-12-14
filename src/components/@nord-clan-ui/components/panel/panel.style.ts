@@ -67,7 +67,7 @@ export const PanelStyled = styled.div<IPanelStyledProps>`
       `}
       fill: ${({ theme }) => theme.palette.bg.panel};
 
-      &:first-child {
+      &:first-of-type {
         filter: blur(8px) saturate(180%);
       }
     }

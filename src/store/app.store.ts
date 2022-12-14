@@ -84,7 +84,7 @@ export default class AppUIStore {
     axios.interceptors.response.use(
       (response) => response,
       (error) => {
-        console.log('error');
+        console.log('api error');
 
         if (error?.response?.status === 401) {
           // const urlCheckRegeExp = new RegExp(

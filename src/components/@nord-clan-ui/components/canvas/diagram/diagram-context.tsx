@@ -1,10 +1,11 @@
 import type { FC } from 'react';
 import type { INodeState } from '../store/node/node-state.store';
 import type { ISettings } from '../store/canvas.store';
-import { useEffect, useRef, createContext, useLayoutEffect } from 'react';
+import { useEffect, useRef, createContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { CanvasStore } from '../store/canvas.store';
-import { useNewStore } from '../../../helpers/index';
+import { useNewStore } from '../../../helpers/stores';
+import useIsomorphicLayoutEffect from '../../../hooks/events/useIsomorphicLayoutEffect';
 
 export const CanvasStoreContext = createContext<CanvasStore | null>(null);
 
@@ -31,7 +32,7 @@ export const DiagramContext: FC<IDiagramContextProps> = observer((props) => {
     }
   }, [store, storeRef]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (renderImportedRequestId > lastRenderedImportRef.current) {
       callbacks.importedStateRendered();
       lastRenderedImportRef.current = renderImportedRequestId;

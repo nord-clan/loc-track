@@ -1,6 +1,6 @@
 import AppStore from './app.store';
 import UserStore from './user.store';
-import { BasePanelStore, SearchStore } from '#/@nord-clan/';
+import { BasePanelStore, SearchStore } from '#/@nord-clan';
 
 export interface IRootStore {
   appStore: AppStore;
