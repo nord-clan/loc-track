@@ -5,7 +5,6 @@ import { GlobalStyles } from '#/styles/common';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 export default class MyDocument extends Document<DocumentProps> {
-  // eslint-disable-next-line no-restricted-syntax
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
     const page = await ctx.renderPage();
     const initialProps = await Document.getInitialProps(ctx);
@@ -40,23 +39,8 @@ export default class MyDocument extends Document<DocumentProps> {
 
           <link
             rel="apple-touch-icon"
-            sizes="128x128"
-            href={`${process.env.NEXT_SITE_URL ?? 'http://localhost:3000'}/icons/logo-128x128.png`}
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="192x192"
-            href={`${process.env.NEXT_SITE_URL ?? 'http://localhost:3000'}/icons/logo-192x192.png`}
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="384x384"
-            href={`${process.env.NEXT_SITE_URL ?? 'http://localhost:3000'}/icons/logo-384x384.png`}
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="512x512"
-            href={`${process.env.NEXT_SITE_URL ?? 'http://localhost:3000'}/icons/logo-521x512.png`}
+            sizes="200x200"
+            href={`${process.env.NEXT_SITE_URL ?? 'http://localhost:3000'}/icons/logo-200x200.png`}
           />
 
           <link

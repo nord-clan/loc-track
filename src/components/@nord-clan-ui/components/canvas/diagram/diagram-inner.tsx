@@ -1,12 +1,11 @@
 import type { FC, ReactNode, PropsWithChildren } from 'react';
-import { useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useCanvasStore } from '#/components/@nord-clan-ui/hooks/store/useRootStore';
 import { BackgroundWrapper } from '../background/background-wrapper';
 import { observer } from 'mobx-react-lite';
 import { DigramInnerStyled } from './diagram-inner.style';
 import { useDiagramInteraction } from '../../../hooks/interactions/useDiagramInteraction';
 import { generateTransform } from '../../../helpers/transformation';
-import { ControlWrapper } from '../control/control-wrapper';
 import { NodesLayer } from '../node/nodes-layer';
 import { LayoutLayer } from '../layout/layout-layer';
 
@@ -16,7 +15,7 @@ export interface IDiagramInnerProps extends PropsWithChildren {
 }
 
 export const DigramInner: FC<IDiagramInnerProps> = observer((props) => {
-  const { children, diagramStyles } = props;
+  const { children, diagramStyles: style } = props;
   const store = useCanvasStore();
   const { ref } = store.diagramState;
 
@@ -27,15 +26,16 @@ export const DigramInner: FC<IDiagramInnerProps> = observer((props) => {
   });
 
   const { offset, zoom } = store.diagramState;
-  const transform = generateTransform(offset, zoom);
+
+  const transform = useMemo(() => generateTransform(offset, zoom), [offset]);
+  const propsDigramInner = useMemo(() => ({ ref, style, 'data-zoom': zoom }), [zoom]);
 
   return (
-    <DigramInnerStyled ref={ref} style={diagramStyles} data-zoom={zoom}>
+    <DigramInnerStyled {...propsDigramInner}>
       <BackgroundWrapper />
-      <LayoutLayer transform={transform} />
-      <NodesLayer transform={transform} />
+      <LayoutLayer {...{ transform }} />
+      <NodesLayer {...{ transform }} />
       {children}
-      <ControlWrapper />
     </DigramInnerStyled>
   );
 });

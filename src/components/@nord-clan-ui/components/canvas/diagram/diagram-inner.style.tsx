@@ -7,4 +7,5 @@ export const DigramInnerStyled = styled.div`
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
 `;

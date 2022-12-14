@@ -8,7 +8,6 @@ const withPWA = require('next-pwa');
 dotenvLoad(process.env.NODE_ENV ?? 'development');
 
 const nextConfig = {
-  webpack5: true,
   eslint: {
     dirs: ['.']
   },
@@ -28,20 +27,6 @@ const nextConfig = {
     dest: 'public',
     register: true,
     skipWaiting: true
-  },
-
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.watchOptions.poll = 1000;
-      config.watchOptions.aggregateTimeout = 300;
-    }
-
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack']
-    });
-
-    return config;
   }
 };
 
