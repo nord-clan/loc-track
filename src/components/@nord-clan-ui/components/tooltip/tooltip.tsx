@@ -70,7 +70,7 @@ export const Tooltip: FC<
     <>
       {childrenElements}
       <FloatingPortal>
-        {isVisible && title && (
+        {isVisible && (
           <TooltipStyled
             ref={floating}
             style={{

@@ -9,6 +9,10 @@ export * from './components/tabs-slider/tabs-slider.store';
 export * from './components/tooltip/tooltip';
 export * from './components/tooltip/tooltip.store';
 
+//* - popover - *//
+export * from './components/popover/popover';
+export * from './components/popover/popover.store';
+
 //* - checkbox - *//
 export * from './components/checkbox/checkbox';
 export * from './components/checkbox/checkbox.store';
