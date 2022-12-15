@@ -10,6 +10,9 @@ import HomeLayout from '#/components/layouts/home/home.layout';
 const Home: NextPageWithLayout = () => {
   return (
     <HomeStyled>
+      <Popover>
+        <span>1111111111</span>
+      </Popover>
       <Diagram
         initState={{
           nodes: [
@@ -26,9 +29,6 @@ const Home: NextPageWithLayout = () => {
           ]
         }}
       />
-
-      {/* <img src="http://localhost:3000/assets/ggd.svg" alt="ad" /> */}
-      <Popover />
     </HomeStyled>
   );
 };

@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { cloneElement, isValidElement, forwardRef, useMemo } from 'react';
 import type { HTMLProps, FC, PropsWithChildren } from 'react';
-import { cloneElement, isValidElement, forwardRef, useMemo } from 'react';
-import type { Placement } from '@floating-ui/react';
 import {
+  FloatingFocusManager,
+  FloatingPortal,
   autoUpdate,
   flip,
   offset,
@@ -17,106 +17,116 @@ import { mergeRefs } from 'react-merge-refs';
 import { useNewStore } from '../../helpers/stores';
 import { PopoverStore } from './popover.store';
 
-// interface IPopoverTriggerProps {
-//   store: PopoverStore;
-// }
+type IPopoverAdditional = ReturnType<typeof useFloating> &
+  ReturnType<typeof useInteractions> & {
+    isVisible: boolean;
+    setIsVisible: (value: boolean) => boolean;
+    modal: boolean;
+  };
 
-// export const PopoverTrigger = forwardRef<HTMLElement, PropsWithChildren<IPopoverTriggerProps>>(
-//   function PopoverTrigger(props, propRef) {
-//     const { children, store } = props;
-//     const { state } = store;
+interface IPopoverAdditionalProps {
+  settings: IPopoverAdditional;
+}
 
-//     const childrenRef = (children as HTMLProps<HTMLDivElement>)?.ref;
+export const PopoverTrigger = forwardRef<HTMLElement, PropsWithChildren<IPopoverAdditionalProps>>(
+  function PopoverTrigger(props, propRef) {
+    const { children, settings } = props;
+    const { reference, getReferenceProps } = settings;
 
-//     const ref = useMemo(
-//       () => mergeRefs([reference, propRef, childrenRef]),
-//       [reference, propRef, childrenRef]
-//     );
+    const childrenRef = (children as HTMLProps<HTMLDivElement>)?.ref;
 
-//     if (isValidElement(children)) {
-//       return cloneElement(
-//         children,
-//         getReferenceProps({
-//           ref,
-//           ...props,
-//           ...children.props,
-//           'data-state': state.isVisible ? 'open' : 'closed'
-//         })
-//       );
-//     }
+    const refs = [reference, propRef, childrenRef].filter(
+      (f) => !!f
+    ) as React.ForwardedRef<HTMLElement>[];
 
-//     return null;
-//   }
-// );
+    const ref = useMemo(() => {
+      return mergeRefs(refs);
+    }, [reference, propRef, childrenRef]);
 
-// export const PopoverContent = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
-//   function PopoverContent(props, propRef) {
-//     const { children } = props;
+    if (isValidElement(children)) {
+      return cloneElement(
+        children,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        getReferenceProps({
+          ref,
+          ...props,
+          ...children.props
+        })
+      );
+    }
 
-//     const ref = useMemo(() => mergeRefs([state.floating, propRef]), [state.floating, propRef]);
+    return null;
+  }
+);
 
-//     return (
-//       <FloatingPortal>
-//         {state.open && (
-//           <FloatingFocusManager context={state.context} modal={state.modal}>
-//             <div
-//               ref={ref}
-//               style={{
-//                 position: state.strategy,
-//                 top: state.y ?? 0,
-//                 left: state.x ?? 0,
-//                 width: 'max-content',
-//                 ...props.style
-//               }}
-//               aria-labelledby={state.labelId}
-//               aria-describedby={state.descriptionId}
-//               {...state.getFloatingProps(props)}>
-//               {children}
-//             </div>
-//           </FloatingFocusManager>
-//         )}
-//       </FloatingPortal>
-//     );
-//   }
-// );
+export const PopoverContent = forwardRef<HTMLElement, PropsWithChildren<IPopoverAdditionalProps>>(
+  function PopoverContent(props, propRef) {
+    const { children, settings } = props;
+    const { floating, modal, isVisible, context, strategy, x, y, getFloatingProps } = settings;
+
+    const ref = useMemo(() => mergeRefs([floating, propRef]), [floating, propRef]);
+
+    return (
+      <FloatingPortal>
+        {isVisible && (
+          <FloatingFocusManager context={context} modal={modal}>
+            <div
+              ref={ref}
+              style={{
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+                width: 'max-content'
+              }}
+              {...getFloatingProps(props)}>
+              {children}
+            </div>
+          </FloatingFocusManager>
+        )}
+      </FloatingPortal>
+    );
+  }
+);
 
 export const Popover: FC<PropsWithChildren> = (props) => {
   const { children } = props;
   const store = useNewStore(PopoverStore);
-  const { setIsVisible, state } = store;
+  const {
+    setIsVisible,
+    state: { isVisible }
+  } = store;
 
   const floating = useFloating({
     placement: 'top',
-    open: state.isVisible,
-    onOpenChange: store.setIsVisible,
+    open: isVisible,
+    onOpenChange: setIsVisible,
     whileElementsMounted: autoUpdate,
     middleware: [offset(5), flip(), shift()]
   });
   const { context } = floating;
 
-  const click = useClick(context, {
-    enabled: state.isVisible == null
-  });
+  const click = useClick(context, { enabled: isVisible == null });
   const dismiss = useDismiss(context);
   const role = useRole(context);
   const interactions = useInteractions([click, dismiss, role]);
 
-  const data = useMemo(
+  const settings: IPopoverAdditional = useMemo(
     () => ({
-      open: state.isVisible,
-      setOpen: setIsVisible,
+      isVisible,
+      setIsVisible,
+      modal: false,
       ...interactions,
       ...floating
     }),
-    []
+    [isVisible]
   );
 
-  return <div>1</div>;
+  console.log('aaa');
 
-  // return (
-  //   <>
-  //     <PopoverTrigger store={store}>{children}</PopoverTrigger>
-  //     <PopoverContent>ggd</PopoverContent>
-  //   </>
-  // );
+  return (
+    <>
+      <PopoverTrigger settings={settings}>{children}</PopoverTrigger>
+      <PopoverContent settings={settings}>ggd</PopoverContent>
+    </>
+  );
 };

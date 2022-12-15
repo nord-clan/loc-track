@@ -1,8 +1,3 @@
-// import type { Props as IHoverProps } from '@floating-ui/react/src/hooks/useHover';
-// import type { Props as IFocusProps } from '@floating-ui/react/src/hooks/useFocus';
-// import type { Props as IDismissProps } from '@floating-ui/react/src/hooks/useDismiss';
-// import type { Props as IRoleProps } from '@floating-ui/react/src/hooks/useRole';
-// import type { Placement } from '@floating-ui/react';
 import { makeAutoObservable, action, makeObservable } from 'mobx';
 
 export interface IPopoverState {

@@ -6,7 +6,6 @@ import { DefaultStyled } from '#/components/layouts/default/default.style';
 
 //* Components
 import { useStore } from '#/store';
-import Header from '#/components/header/header';
 
 // Default layout
 //* ------------------------------------------------------------------------------------------ *//
@@ -23,7 +22,7 @@ const DefaultLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <DefaultStyled>{children}</DefaultStyled>
-      <Header />
+      {/* <Header /> */}
     </>
   );
 };

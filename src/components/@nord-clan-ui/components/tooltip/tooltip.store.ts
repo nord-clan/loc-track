@@ -3,25 +3,21 @@ import type { Props as IFocusProps } from '@floating-ui/react/src/hooks/useFocus
 import type { Props as IDismissProps } from '@floating-ui/react/src/hooks/useDismiss';
 import type { Props as IRoleProps } from '@floating-ui/react/src/hooks/useRole';
 import type { Placement } from '@floating-ui/react';
+import type { ITooltipProps } from './tooltip';
 import { makeAutoObservable, action, makeObservable } from 'mobx';
 
-export interface ITooltipProps {
-  title: string;
-  placement?: Placement;
-  offset?: number;
-  settings?: ITooltipSettings;
-}
-
-export interface ITooltipState {
-  title: string;
-  isVisible: boolean;
-}
+type ITooltipParams = Omit<ITooltipProps, 'controllerRef'>;
 
 export interface ITooltipSettings {
   hoverProps?: IHoverProps;
   focusProps?: IFocusProps;
   dismissProps?: IDismissProps;
   roleProps?: IRoleProps;
+}
+
+export interface ITooltipState {
+  title: string;
+  isVisible: boolean;
 }
 
 export interface ITooltipController {
@@ -43,7 +39,7 @@ export class TooltipStore {
   };
   state: ITooltipState;
 
-  constructor(props: ITooltipProps) {
+  constructor(props: ITooltipParams) {
     const { title, settings, placement, offset } = props;
 
     this.placement = placement ?? 'top';
