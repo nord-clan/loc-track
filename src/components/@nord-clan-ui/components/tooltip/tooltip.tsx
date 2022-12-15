@@ -1,81 +1,89 @@
-import React, { useState, useRef } from 'react';
-import type { PropsWithChildren, MutableRefObject, FC } from 'react';
+import React, { useMemo } from 'react';
+import type { PropsWithChildren, FC } from 'react';
 import type { ITooltipController, ITooltipProps } from './tooltip.store';
-import { usePopper } from 'react-popper';
+import type { TControllerRef } from '../../helpers';
 import { observer } from 'mobx-react-lite';
 import { TooltipStore } from './tooltip.store';
 import { TooltipStyled } from './tooltip.style';
-import cn from 'classnames';
+import {
+  useFloating,
+  autoUpdate,
+  offset as _offset,
+  flip,
+  shift,
+  useHover,
+  useFocus,
+  useDismiss,
+  useRole,
+  useInteractions,
+  FloatingPortal
+} from '@floating-ui/react';
+import { setController, useNewStore } from '../../helpers/stores';
 
 export const Tooltip: FC<
   PropsWithChildren<ITooltipProps> & {
-    controllerRef?: MutableRefObject<ITooltipController | undefined>;
+    controllerRef?: TControllerRef<ITooltipController>;
   }
-> = (props) => {
+> = observer((props) => {
   const { controllerRef, children, ...restProps } = props;
 
-  const storeRef = useRef<TooltipStore>(new TooltipStore(restProps));
-
+  const store = useNewStore(TooltipStore, restProps);
   if (controllerRef) {
-    controllerRef.current = storeRef.current.controller;
+    setController(store, controllerRef);
   }
+  const { state, settings, placement, offset } = store;
+  const { isVisible, title } = state;
 
-  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-
-  if (!restProps.title) return <>{children}</>;
-
-  return (
-    <TooltipStyled>
-      <div
-        onMouseEnter={storeRef.current.show}
-        onMouseLeave={storeRef.current.hide}
-        ref={setReferenceElement}>
-        {children}
-      </div>
-      <InnerTooltip store={storeRef.current} referenceElement={referenceElement} />
-    </TooltipStyled>
-  );
-};
-
-const InnerTooltip = observer(
-  (props: { store: TooltipStore; referenceElement: HTMLDivElement | null }) => {
-    const { isVisible } = props.store.state;
-
-    return !isVisible ? null : <PopperedTooltip {...props} />;
-  }
-);
-
-interface IPopperedTooltipProps {
-  store: TooltipStore;
-  referenceElement: HTMLDivElement | null;
-}
-
-const PopperedTooltip: FC<IPopperedTooltipProps> = observer((props) => {
-  const { store, referenceElement } = props;
-
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
-  const { placement } = store.props;
-  const { title, style } = store.state;
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+  const { x, y, reference, floating, strategy, context } = useFloating({
+    open: isVisible,
+    onOpenChange: store.setIsVisible,
     placement,
-    strategy: 'fixed',
-    modifiers: [
-      {
-        name: 'offset',
-        options: {
-          offset: [0, 10]
-        }
-      }
-    ]
+    whileElementsMounted: autoUpdate,
+    middleware: [_offset(offset), flip(), shift()]
   });
 
+  const { hoverProps, focusProps, dismissProps, roleProps } = settings;
+  // Event listeners to change the open state
+  const hover = useHover(context, hoverProps);
+  const focus = useFocus(context, focusProps);
+  const dismiss = useDismiss(context, dismissProps);
+  // Role props for screen readers
+  const role = useRole(context, roleProps);
+
+  // Merge all the interactions into prop getters
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
+
+  const childrenElements = useMemo(
+    () =>
+      React.isValidElement(children)
+        ? React.cloneElement(
+            children,
+            getReferenceProps({
+              ref: reference
+            })
+          )
+        : null,
+    []
+  );
+
   return (
-    <div
-      className={cn('tooltip', style)}
-      ref={setPopperElement}
-      style={styles.popper}
-      {...attributes.popper}>
-      {title}
-    </div>
+    <>
+      {childrenElements}
+      <FloatingPortal>
+        {isVisible && title && (
+          <TooltipStyled
+            ref={floating}
+            style={{
+              // Positioning styles
+              position: strategy,
+              top: y ?? 0,
+              left: x ?? 0
+            }}
+            {...getFloatingProps()}>
+            {title}
+          </TooltipStyled>
+        )}
+      </FloatingPortal>
+    </>
   );
 });

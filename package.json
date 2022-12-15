@@ -33,7 +33,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
-    "@popperjs/core": "^2.11.6",
+    "@floating-ui/react": "^0.14.0",
     "@use-gesture/react": "^10.2.23",
     "@vercel/analytics": "^0.1.6",
     "axios": "^1.2.1",
@@ -50,12 +50,11 @@
     "next-images": "^1.8.4",
     "next-pwa": "^5.6.0",
     "next-seo": "^5.15.0",
-    "next-sitemap": "^3.1.32",
+    "next-sitemap": "^3.1.42",
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
-    "react-popper": "^2.3.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

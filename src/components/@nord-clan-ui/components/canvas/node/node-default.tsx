@@ -3,7 +3,7 @@ import type { INodeVisualComponentProps } from '../store/node/node-settings.stor
 import type { INodeDefaultSettings } from '../store/node/node.interface';
 import { NodeDefaultStyled } from './node-default.style';
 import { observer } from 'mobx-react-lite';
-import { Tooltip } from '../../tooltip/tooltip';
+import { Tooltip } from '#/@nord-clan';
 
 export const NodeDefault: FC<INodeVisualComponentProps<INodeDefaultSettings>> = observer(
   (props) => {
