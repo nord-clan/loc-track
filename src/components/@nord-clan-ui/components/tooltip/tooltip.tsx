@@ -16,14 +16,15 @@ export type ITooltipProps = PropsWithChildren<{
   controllerRef?: TControllerRef<ITooltipController>;
 }>;
 
-export const Tooltip: FC<ITooltipProps> = observer((props) => {
+export const Tooltip: FC<ITooltipProps> = (props) => {
+  const { children } = props;
   return (
-    <TooltipContextProvider {...{ ...props, childrenRoot: props.children }}>
+    <TooltipContextProvider {...{ ...props, childrenRoot: children }}>
       <TooltipRoot />
       <TooltipInner />
     </TooltipContextProvider>
   );
-});
+};
 
 export const TooltipInner: FC = observer(() => {
   const { store, getFloatingProps, strategy, x, y, floating } = useTooltip();
@@ -48,7 +49,7 @@ export const TooltipInner: FC = observer(() => {
   );
 });
 
-export const TooltipRoot: FC = observer(() => {
+export const TooltipRoot: FC = () => {
   const { root } = useTooltip();
   return <>{root}</>;
-});
+};

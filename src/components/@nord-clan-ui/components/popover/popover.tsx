@@ -121,8 +121,6 @@ export const Popover: FC<PropsWithChildren> = (props) => {
     [isVisible]
   );
 
-  console.log('aaa');
-
   return (
     <>
       <PopoverTrigger settings={settings}>{children}</PopoverTrigger>
