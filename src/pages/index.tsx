@@ -2,7 +2,7 @@ import type { NextPageWithLayout } from './_app';
 import type { ReactElement } from 'react';
 import React from 'react';
 import { HomeStyled } from '#/styles/pages/home.style';
-import { Diagram, Popover } from '#/@nord-clan';
+import { Diagram } from '#/@nord-clan';
 import HomeLayout from '#/components/layouts/home/home.layout';
 
 // Home component
@@ -26,9 +26,6 @@ const Home: NextPageWithLayout = () => {
           ]
         }}
       />
-
-      {/* <img src="http://localhost:3000/assets/ggd.svg" alt="ad" /> */}
-      <Popover />
     </HomeStyled>
   );
 };

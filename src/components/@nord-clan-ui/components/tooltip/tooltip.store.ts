@@ -1,27 +1,16 @@
-import type { Props as IHoverProps } from '@floating-ui/react/src/hooks/useHover';
-import type { Props as IFocusProps } from '@floating-ui/react/src/hooks/useFocus';
-import type { Props as IDismissProps } from '@floating-ui/react/src/hooks/useDismiss';
-import type { Props as IRoleProps } from '@floating-ui/react/src/hooks/useRole';
-import type { Placement } from '@floating-ui/react';
-import { makeAutoObservable, action, makeObservable } from 'mobx';
+import type { BasePlacement } from '@popperjs/core';
+import { right } from '@popperjs/core';
+import { makeAutoObservable, action, makeObservable, observable } from 'mobx';
 
-export interface ITooltipProps {
+export interface ITooltipParams {
   title: string;
-  placement?: Placement;
-  offset?: number;
-  settings?: ITooltipSettings;
+  delay?: number;
+  placement?: BasePlacement;
 }
 
 export interface ITooltipState {
   title: string;
   isVisible: boolean;
-}
-
-export interface ITooltipSettings {
-  hoverProps?: IHoverProps;
-  focusProps?: IFocusProps;
-  dismissProps?: IDismissProps;
-  roleProps?: IRoleProps;
 }
 
 export interface ITooltipController {
@@ -31,45 +20,9 @@ export interface ITooltipController {
 }
 
 export class TooltipStore {
-  offset: number;
-  placement: Placement;
-  settings: ITooltipSettings = {
-    hoverProps: {
-      move: false
-    },
-    roleProps: {
-      role: 'tooltip'
-    }
-  };
+  props: ITooltipParams;
   state: ITooltipState;
-
-  constructor(props: ITooltipProps) {
-    const { title, settings, placement, offset } = props;
-
-    this.placement = placement ?? 'top';
-    this.offset = offset ?? 5;
-    this.settings = {
-      ...this.settings,
-      ...settings
-    };
-
-    this.state = {
-      title,
-      isVisible: false
-    };
-
-    makeAutoObservable(this.state);
-    makeObservable(this, {
-      setTitle: action,
-      setIsVisible: action
-    });
-  }
-
-  setIsVisible = (isVisible: boolean): boolean => (this.state.isVisible = isVisible);
-
-  setTitle = (title: string): void => {
-    this.state.title = title;
-  };
+  timeout: number | undefined;
 
   get stateGetter(): ITooltipState {
     return {
@@ -77,10 +30,54 @@ export class TooltipStore {
     };
   }
 
-  //* --- Controllers ------------------------------------------------ * //
-  controller: ITooltipController = {
+  controller = {
     setTitle: (title: string) => this.setTitle(title),
     setIsVisible: (isVisible: boolean) => this.setIsVisible(isVisible),
     getState: () => this.stateGetter
+  } as ITooltipController;
+
+  constructor(props: ITooltipParams) {
+    const { title, delay, placement, ...rest } = props;
+
+    this.props = {
+      ...rest,
+      title,
+      delay: delay ?? 0,
+      placement: placement ?? right
+    };
+
+    this.state = {
+      title,
+      isVisible: false
+    };
+
+    this.timeout = undefined;
+
+    makeAutoObservable(this.state, {
+      isVisible: observable
+    });
+
+    makeObservable(this, {
+      setTitle: action,
+      setIsVisible: action
+    });
+  }
+
+  show = (): void => {
+    this.timeout = window.setTimeout(() => {
+      this.setIsVisible(true);
+    }, this.props.delay);
+  };
+
+  hide = (): void => {
+    window.clearTimeout(this.timeout);
+    this.timeout = undefined;
+    this.setIsVisible(false);
+  };
+
+  setIsVisible = (isVisible: boolean): boolean => (this.state.isVisible = isVisible);
+
+  setTitle = (title: string): void => {
+    this.state.title = title;
   };
 }

@@ -2,6 +2,7 @@ import { useGesture } from '@use-gesture/react';
 import { useCanvasStore } from '../store/useRootStore';
 import { useDiagramWheelHandler } from './useDiagramWheelHandler';
 import { useDiagramDragHandlers } from './useDiagramDragHandlers';
+import { useContextMenu } from './useContextMenu';
 import { useCallback } from 'react';
 
 export const useDiagramInteraction = () => {
@@ -15,11 +16,13 @@ export const useDiagramInteraction = () => {
   // const pinchHandlers = useDiagramPinchHandlers(cancelGesture);
   const dragHandlers = useDiagramDragHandlers(cancelGesture);
   const wheelHandler = useDiagramWheelHandler(diagramState);
+  const contextHandler = useContextMenu();
 
   useGesture(
     {
       ...dragHandlers,
-      ...wheelHandler
+      ...wheelHandler,
+      ...contextHandler
     },
     {
       target: diagramState.ref,
