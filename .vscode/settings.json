@@ -13,7 +13,7 @@
     ".next": true,
     ".github": true,
     ".husky": true,
-    ".vscode": true
+    "node_modules": true
   },
-  "hide-files.files": [".next", ".github", ".husky", ".vscode"]
+  "hide-files.files": [".next", ".github", ".husky", "node_modules"]
 }

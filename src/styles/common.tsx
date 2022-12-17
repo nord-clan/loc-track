@@ -2,24 +2,6 @@ import { breakpoint } from '#/utils/theme';
 import { css } from '@emotion/react';
 
 export const GlobalStyles = css`
-  /* noto-sans-sc-regular - latin_chinese-simplified */
-  @font-face {
-    font-family: 'Noto Sans SC';
-    font-style: normal;
-    font-weight: 400;
-    src: local(''),
-      url('/fonts/NotoSansSC/noto-sans-sc-v26-latin_chinese-simplified-regular.woff2')
-        format('woff2');
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-  }
-  /* noto-sans-sc-500 - latin_chinese-simplified */
-  @font-face {
-    font-family: 'Noto Sans SC';
-    font-style: normal;
-    font-weight: 500;
-    src: local(''),
-      url('/fonts/NotoSansSC/noto-sans-sc-v26-latin_chinese-simplified-500.woff2') format('woff2');
-  }
   /* rubik-300 - latin_cyrillic */
   @font-face {
     font-family: 'Rubik';
@@ -83,7 +65,7 @@ export const GlobalStyles = css`
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
 
-    font-family: Rubik, 'Noto Sans SC', sans-serif;
+    font-family: Rubik, sans-serif;
     font-weight: 400;
 
     *,
