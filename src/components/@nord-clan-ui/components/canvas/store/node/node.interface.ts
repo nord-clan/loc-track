@@ -1,5 +1,5 @@
 import type { Point } from '../../../../helpers/point';
-import type { VisualComponent } from '../visual-component/visual-component-state.store';
+import type { IVisualComponent } from '../visual-component/visual-component-state.store';
 import type { NodeState } from './node-state.store';
 
 export interface INodeStateWithoutId {
@@ -34,7 +34,7 @@ export interface INodeStateDiff {
 
 export interface INodeDefaultSettings {
   idk?: unknown;
-  InnerNode?: VisualComponent<{ node: NodeState }>;
+  InnerNode?: IVisualComponent<{ node: NodeState }>;
   removeDefaultClasses?: true;
   classes?: NodeDefaultSettingsByStates<string[]>;
   style?: NodeDefaultSettingsByStates<React.CSSProperties>;

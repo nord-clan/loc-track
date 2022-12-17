@@ -22,7 +22,7 @@ export * from './components/dialog/dialog';
 export * from './components/dialog/dialog.store';
 
 //* - background - *//
-export * from './components/canvas/background/background-wrapper';
+export * from './components/canvas/ui/background/background-wrapper';
 
 //* - diagram - *//
 export * from './components/canvas/diagram/diagram';

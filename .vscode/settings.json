@@ -10,11 +10,10 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true,
-    "node_modules": true,
     ".next": true,
     ".github": true,
     ".husky": true,
-    "pnpm-lock.yaml": true
+    ".vscode": true
   },
-  "hide-files.files": ["node_modules", ".next", ".github", ".husky", "pnpm-lock.yaml"]
+  "hide-files.files": [".next", ".github", ".husky", ".vscode"]
 }

@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import type { NodeState } from '../store/node/node-state.store';
+import type { NodeState } from '../../store/node/node-state.store';
 import { observer } from 'mobx-react-lite';
 import { createContext } from 'react';
-import { NodeWrapperStyled } from './node-wrapper.style';
+import { NodeWrapperStyled } from './styles';
 
 export const NodeWrapper: FC<{ node: NodeState }> = observer(({ node }) => {
   const {

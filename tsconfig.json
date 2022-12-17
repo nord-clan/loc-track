@@ -40,5 +40,5 @@
     "strict": false
   },
   "exclude": ["./node_modules/**/*"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "postcss.config.js"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "postcss.config.js", "src/components/@nord-clan-ui/components/canvas/utils/.gitkeep"]
 }

@@ -3,7 +3,7 @@ import type { CanvasStore } from '../canvas.store';
 import type { PropertyChange } from '../callbacks.store';
 import { makeAutoObservable, reaction } from 'mobx';
 import { addPoints, arePointsEqual } from '../../../../helpers/point';
-import { HtmlElement } from '../../html-element';
+import { HtmlElement } from '../../ui/html-element';
 import { deepCopy, isBoolean } from '../../../../helpers/index';
 import { COMPONENT_DEFAULT_TYPE } from '../visual-component/visual-components.store';
 import { generateTransform } from '../../../../helpers/transformation';

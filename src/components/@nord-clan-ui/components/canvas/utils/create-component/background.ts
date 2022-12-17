@@ -1,35 +1,13 @@
-import type { FC } from 'react';
-import type { IBackgroundComponentProps } from '../store/diagram/diagram-settings.store';
-import type {
-  IComponentDefinition,
-  VisualComponent
-} from '../store/visual-component/visual-component-state.store';
-import { observer } from 'mobx-react-lite';
-import React, { useMemo } from 'react';
-import { BackgroundSvgStyled } from './background-svg.style';
+import type { Point } from '../../../../helpers/point';
+import type { IVisualComponent } from '../../store/visual-component/visual-component-state.store';
+import { SvgBackground } from '../../ui/background/background-svg';
+import { createComponent } from './creator';
 
-const SvgBackground: FC<IBackgroundComponentProps<ISvgBackgroundSettings>> = observer((props) => {
-  const { diagramOffset, diagramZoom, settings } = props;
-  const finalSettings = settings ?? defaultSettings;
+export type IBackgroundProps = IVisualComponent<IBackgroundComponentProps<ISvgBackgroundSettings>>;
 
-  const backgroundImage = useMemo(
-    () =>
-      finalSettings.imageGenerator
-        ? finalSettings.imageGenerator(100 * diagramZoom, 100 * diagramZoom)
-        : undefined,
-    [finalSettings, finalSettings.imageGenerator, diagramZoom]
-  );
-
-  return (
-    <BackgroundSvgStyled
-      {...{
-        backgroundColor: finalSettings.color,
-        backgroundImage,
-        backgroundPosition: `${diagramOffset[0]}px ${diagramOffset[1]}px`
-      }}
-    />
-  );
-});
+export const createDefaultBackground = (settings?: Partial<ISvgBackgroundSettings>) => {
+  return createComponent(SvgBackground, defaultSettings, settings);
+};
 
 const gridImageGenerator = (
   width: number,
@@ -99,23 +77,9 @@ export const createCrossesImageGenerator =
   (width: number, height: number) =>
     crossesImageGenerator(width, height, sizeMultiplicator, color, opacity);
 
-const defaultSettings: ISvgBackgroundSettings = {
+export const defaultSettings: ISvgBackgroundSettings = {
   imageGenerator: createCrossesImageGenerator(0.2, '#858585', 0.1),
   color: 'transparent'
-};
-
-export const createSvgBackground = (
-  settings?: Partial<ISvgBackgroundSettings>
-): IComponentDefinition<IBackgroundComponentProps, ISvgBackgroundSettings> => {
-  const finalSettings = {
-    ...defaultSettings,
-    ...(settings || {})
-  };
-
-  return {
-    Component: SvgBackground as VisualComponent<IBackgroundComponentProps<unknown>>,
-    settings: finalSettings
-  };
 };
 
 export type BackgroundSvgImageGenerator = (width: number, height: number) => string;
@@ -128,4 +92,10 @@ export type BackgroundSvgImageGenerator = (width: number, height: number) => str
 export interface ISvgBackgroundSettings {
   imageGenerator?: BackgroundSvgImageGenerator;
   color: string;
+}
+
+export interface IBackgroundComponentProps<TSettings = unknown> {
+  diagramOffset: Point;
+  diagramZoom: number;
+  settings?: TSettings;
 }

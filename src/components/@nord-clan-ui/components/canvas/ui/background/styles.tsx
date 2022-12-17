@@ -17,3 +17,9 @@ export const BackgroundSvgStyled = styled.div<IBackgroundSvgStyledProps>`
     background-position: ${backgroundPosition};
   `}
 `;
+
+export const BackgroundWrapperStyled = styled.div`
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+`;

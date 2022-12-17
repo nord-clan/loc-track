@@ -4,9 +4,7 @@ export class InteractionSettingsStore {
   private _diagramZoom: boolean;
   private _diagramPan: boolean;
   private _nodeDrag: boolean;
-  private _portConnection: boolean;
   private _nodeSelection: boolean;
-  private _linkSelection: boolean;
   private _multiselectionKey: MultipleSelectionKey;
   private _disableAllPointerInteractionsCounter: number;
 
@@ -19,9 +17,7 @@ export class InteractionSettingsStore {
     this._diagramZoom = obj?.diagramZoom ?? true;
     this._diagramPan = obj?.diagramPan ?? true;
     this._nodeDrag = obj?.nodeDrag ?? true;
-    this._portConnection = obj?.portConnection ?? true;
     this._nodeSelection = obj?.nodeSelection ?? true;
-    this._linkSelection = obj?.linkSelection ?? true;
     this._multiselectionKey = obj?.multiselectionKey ?? 'shift';
     this._disableAllPointerInteractionsCounter = obj?.disableAllMouseAndTouchInteractions ? 1 : 0;
   };
@@ -50,28 +46,12 @@ export class InteractionSettingsStore {
     this._nodeDrag = value;
   }
 
-  get portConnection() {
-    return this._portConnection;
-  }
-
-  set portConnection(value: boolean) {
-    this._portConnection = value;
-  }
-
   get nodeSelection() {
     return this._nodeSelection;
   }
 
   set nodeSelection(value: boolean) {
     this._nodeSelection = value;
-  }
-
-  get linkSelection() {
-    return this._linkSelection;
-  }
-
-  set linkSelection(value: boolean) {
-    this._linkSelection = value;
   }
 
   get multiselectionKey() {
@@ -123,9 +103,7 @@ export interface IUserInteraction {
   diagramZoom: boolean;
   diagramPan: boolean;
   nodeDrag: boolean;
-  portConnection: boolean;
   nodeSelection: boolean;
-  linkSelection: boolean;
   multiselectionKey: MultipleSelectionKey;
   disableAllMouseAndTouchInteractions: boolean;
 }

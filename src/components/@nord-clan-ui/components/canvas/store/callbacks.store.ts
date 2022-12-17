@@ -200,7 +200,6 @@ export interface ICallbacks {
   onDragEnded?: (info: IOnDragEnded, store: CanvasStore) => void;
   onImportedStateRendered?: (store: CanvasStore) => void;
 }
-
 export interface IOnDragStarted {
   nodes: NodeState[];
 }
@@ -245,3 +244,13 @@ export type PropertyChange<TValue> = {
   oldValue: TValue;
   newValue: TValue;
 };
+
+export interface IOnContextMenu {
+  removedNodes: INodeExport[];
+  failedToRemoveNodeIds: string[];
+}
+
+export interface IContextMenu {
+  x: number;
+  y: number;
+}

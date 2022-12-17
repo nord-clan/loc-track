@@ -1,54 +1,70 @@
-import type { CanvasStore } from '../canvas.store';
 import type {
   IComponentDefinition,
-  VisualComponent
+  IVisualComponent
 } from '../visual-component/visual-component-state.store';
 import type { Point } from '../../../../helpers/point';
 import type { IUserInteraction } from '../interaction-settings.store';
+import type { IBackgroundComponentProps } from '../../utils/create-component/background';
+import type { IControlComponentProps } from '../../utils/create-component/control';
+import type { IContextMenuComponentProps } from '../../utils/create-component/context-menu';
+import { createDefaultContextMenu } from '../../utils/create-component/context-menu';
+import { createDefaultControl } from '../../utils/create-component/control';
 import { makeAutoObservable } from 'mobx';
-import { createSvgBackground } from '../../background/background-svg';
 import { InteractionSettingsStore } from '../interaction-settings.store';
-import { VisualComponentWithDefault } from '../visual-component/visual-component-with-default.store';
-import { createDefaultControl } from '../../control/control-default';
+import { VisualComponentWithDefault as VisualComponent } from '../visual-component/visual-component-with-default.store';
+import { createDefaultBackground } from '../../utils/create-component/background';
 
 export class DiagramSettingsStore {
-  private _backgroundComponentState: VisualComponentWithDefault<IBackgroundComponentProps>;
-  private _controlComponentState: VisualComponentWithDefault<IControlComponentProps>;
-  private _zoomInterval: Point = defaultZoomInterval;
-  private _zoomToFitSettings: IZoomToFitSettings = defaultZoomToFitSettings;
   private _userInteraction: InteractionSettingsStore;
 
+  private _backgroundComponentState: VisualComponent<IBackgroundComponentProps>;
+  private _controlComponentState: VisualComponent<IControlComponentProps>;
+  private _contextMenuComponentState: VisualComponent<IContextMenuComponentProps>;
+
+  private _zoomInterval: Point = defaultZoomInterval;
+  private _zoomToFitSettings: IZoomToFitSettings = defaultZoomToFitSettings;
+
   constructor() {
-    this._backgroundComponentState = new VisualComponentWithDefault<IBackgroundComponentProps>(
-      createSvgBackground()
-    );
     this._userInteraction = new InteractionSettingsStore();
-    this._controlComponentState = new VisualComponentWithDefault<IControlComponentProps>(
-      createDefaultControl()
-    );
+
+    this._backgroundComponentState = new VisualComponent(createDefaultBackground());
+    this._controlComponentState = new VisualComponent(createDefaultControl());
+    this._contextMenuComponentState = new VisualComponent(createDefaultContextMenu());
+
     makeAutoObservable(this);
   }
 
   import = (obj?: IDiagramSettings) => {
+    this._userInteraction.import(obj?.userInteraction);
+
     if (this._backgroundComponentState && this._controlComponentState) {
       this._backgroundComponentState.import(obj?.backgroundComponent);
       this._controlComponentState.import(obj?.controlComponent);
       this.setZoomInterval(obj?.zoomInterval);
     }
 
+    this._contextMenuComponentState.import(obj?.contextMenuComponent);
+
     this._zoomToFitSettings = {
       ...defaultZoomToFitSettings,
       ...obj?.zoomToFitSettings
     };
-    this._userInteraction.import(obj?.userInteraction);
   };
+
+  get userInteraction() {
+    return this._userInteraction;
+  }
 
   get backgroundComponentState() {
     return this._backgroundComponentState;
   }
 
-  get miniControlComponentState() {
+  get controlComponentState() {
     return this._controlComponentState;
+  }
+
+  get contextMenuComponentState() {
+    return this._contextMenuComponentState;
   }
 
   get zoomInterval() {
@@ -59,14 +75,12 @@ export class DiagramSettingsStore {
     return this._zoomToFitSettings;
   }
 
-  get userInteraction() {
-    return this._userInteraction;
-  }
-
   setZoomInterval = (value: Point | null | undefined) => {
     this._zoomInterval = value ?? defaultZoomInterval;
   };
 }
+
+//* --- Default --- *//
 
 const defaultZoomInterval: Point = [0.1, 3];
 const defaultZoomToFitSettings: IZoomToFitSettings = {
@@ -75,28 +89,22 @@ const defaultZoomToFitSettings: IZoomToFitSettings = {
   callOnImportState: true
 };
 
+//* --- Interfaces --- *//
+
 export interface IDiagramSettings {
-  backgroundComponent?:
-    | IComponentDefinition<IBackgroundComponentProps, unknown>
-    | VisualComponent<IBackgroundComponentProps>;
-  controlComponent?:
-    | IComponentDefinition<IControlComponentProps, unknown>
-    | VisualComponent<IControlComponentProps>;
+  userInteraction?: Partial<IUserInteraction>;
+
+  backgroundComponent?: IComponent<IBackgroundComponentProps>;
+  controlComponent?: IComponent<IControlComponentProps>;
+  contextMenuComponent?: IComponent<IContextMenuComponentProps>;
+
   zoomInterval?: Point;
   zoomToFitSettings?: Partial<IZoomToFitSettings>;
-  userInteraction?: Partial<IUserInteraction>;
 }
 
-export interface IBackgroundComponentProps<TSettings = unknown> {
-  diagramOffset: Point;
-  diagramZoom: number;
-  settings?: TSettings;
-}
-
-export interface IControlComponentProps<TSettings = unknown> {
-  canvasStore: CanvasStore;
-  settings?: TSettings;
-}
+type IComponent<TComponentProps> =
+  | IComponentDefinition<TComponentProps, unknown>
+  | IVisualComponent<TComponentProps>;
 
 export interface IZoomToFitSettings {
   padding: Point;

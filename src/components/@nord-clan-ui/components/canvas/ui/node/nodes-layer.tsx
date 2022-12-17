@@ -1,9 +1,9 @@
 import React from 'react';
 import type { FC } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useCanvasStore } from '../../../hooks/store/useRootStore';
+import { useCanvasStore } from '../../../../hooks/store/useRootStore';
 import { NodeWrapper } from './node-wrapper';
-import { NodesLayerStyled } from './nodes-layer.style';
+import { NodesLayerStyled } from './styles';
 
 export const NodesLayer: FC<{ transform: string }> = observer(({ transform }) => {
   return (

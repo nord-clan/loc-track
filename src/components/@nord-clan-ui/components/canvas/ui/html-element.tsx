@@ -1,7 +1,7 @@
-import type { Point } from '../../helpers/point';
-import type { DiagramStateStore } from './store/diagram/diagram-state.store';
+import type { Point } from '../../../helpers/point';
+import type { DiagramStateStore } from '../store/diagram/diagram-state.store';
 import { computed, makeAutoObservable } from 'mobx';
-import { multiplyPoint } from '../../helpers/point';
+import { multiplyPoint } from '../../../helpers/point';
 
 export class HtmlElement {
   private _diagramState: DiagramStateStore;

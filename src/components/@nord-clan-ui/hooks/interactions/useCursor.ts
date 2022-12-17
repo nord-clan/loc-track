@@ -27,5 +27,5 @@ export function useDiagramCursor(active: boolean, cursor: React.CSSProperties['c
   const { diagramState } = useCanvasStore();
   const ref = diagramState.ref.current;
 
-  useCursor(active, cursor, ref);
+  useCursor(active, cursor, ref as HTMLDivElement);
 }

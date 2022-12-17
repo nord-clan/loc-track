@@ -7,7 +7,7 @@ import type { Point } from '../../../../helpers/point';
 import type { CanvasStore } from '../canvas.store';
 import type { BoundingBox } from '../../../../helpers/index';
 import { addPoints, multiplyPoint, subtractPoints } from '../../../../helpers/point';
-import { HtmlElement } from '../../html-element';
+import { HtmlElement } from '../../ui/html-element';
 import { clampValue, deepCopy } from '../../../../helpers/index';
 import { makeAutoObservable } from 'mobx';
 

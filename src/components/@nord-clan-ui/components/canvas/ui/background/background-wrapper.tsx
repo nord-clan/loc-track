@@ -1,8 +1,8 @@
+import React from 'react';
 import type { FC } from 'react';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { BackgroundWrapperStyled } from './background-wrapper.style';
-import { useCanvasStore } from '../../../hooks/store/useRootStore';
+import { useCanvasStore } from '../../../../hooks/store/useRootStore';
+import { BackgroundWrapperStyled } from './styles';
 
 export const BackgroundWrapper: FC = observer(() => {
   const canvasStore = useCanvasStore();
@@ -10,9 +10,7 @@ export const BackgroundWrapper: FC = observer(() => {
   const { diagramSettings, diagramState } = canvasStore;
 
   const { offset, zoom } = diagramState;
-  const {
-    backgroundComponentState: { settings, Component }
-  } = diagramSettings;
+  const { settings, Component } = diagramSettings.backgroundComponentState;
 
   return (
     <BackgroundWrapperStyled>

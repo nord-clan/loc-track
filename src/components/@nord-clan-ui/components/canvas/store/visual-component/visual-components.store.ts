@@ -1,5 +1,5 @@
 import type { IDictionary } from '../../../../helpers/index';
-import type { IComponentDefinition, VisualComponent } from './visual-component-state.store';
+import type { IComponentDefinition, IVisualComponent } from './visual-component-state.store';
 import { makeAutoObservable } from 'mobx';
 import { VisualComponentState } from './visual-component-state.store';
 
@@ -9,7 +9,7 @@ export class VisualComponents<TSettings, TComponentProps> {
 
   constructor(
     defaultComponents: IDictionary<
-      IComponentDefinition<TComponentProps, TSettings> | VisualComponent<TComponentProps>
+      IComponentDefinition<TComponentProps, TSettings> | IVisualComponent<TComponentProps>
     >
   ) {
     this._defaultComponents = this._createComponentCollection(defaultComponents);
@@ -33,16 +33,16 @@ export class VisualComponents<TSettings, TComponentProps> {
 
   private _createComponentCollection = (
     componentsObjects?: IDictionary<
-      IComponentDefinition<TComponentProps, TSettings> | VisualComponent<TComponentProps>
+      IComponentDefinition<TComponentProps, TSettings> | IVisualComponent<TComponentProps>
     >
   ): IDictionary<VisualComponentState<TComponentProps, TSettings>> => {
     const collection: IDictionary<VisualComponentState<TComponentProps, TSettings>> = {};
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    componentsObjects &&
+    if (componentsObjects) {
       Object.entries(componentsObjects).forEach(([key, value]) => {
         collection[key] = new VisualComponentState<TComponentProps, TSettings>(value);
       });
+    }
 
     return collection;
   };
@@ -52,6 +52,6 @@ export const COMPONENT_DEFAULT_TYPE = 'default';
 
 export interface IVisualComponentsObject<TSettings, TComponentProps> {
   Components?: IDictionary<
-    IComponentDefinition<TComponentProps, TSettings> | VisualComponent<TComponentProps>
+    IComponentDefinition<TComponentProps, TSettings> | IVisualComponent<TComponentProps>
   >;
 }

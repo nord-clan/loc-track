@@ -1,20 +1,14 @@
 import type { SharedGestureState } from '@use-gesture/react';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
+import { useCanvasStore } from '../store/useRootStore';
 
 export function useContextMenu() {
-  const handleContextMenu = (e) => e.preventDefault();
-
-  useEffect(() => {
-    document.addEventListener('contextmenu', handleContextMenu);
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-    };
-  });
+  const store = useCanvasStore();
 
   const handlers = useMemo<IContextHandler>(
     () => ({
-      onContextMenu: (e) => {
-        console.log('у', e);
+      onContextMenu: ({ event }) => {
+        event.preventDefault();
       }
     }),
     []

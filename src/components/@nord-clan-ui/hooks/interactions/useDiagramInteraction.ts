@@ -4,9 +4,11 @@ import { useDiagramWheelHandler } from './useDiagramWheelHandler';
 import { useDiagramDragHandlers } from './useDiagramDragHandlers';
 import { useContextMenu } from './useContextMenu';
 import { useCallback } from 'react';
+import { useResizeAction } from '../events/useResizeAction';
 
 export const useDiagramInteraction = () => {
-  const { diagramState, diagramSettings } = useCanvasStore();
+  const store = useCanvasStore();
+  const { diagramState, diagramSettings } = store;
 
   const cancelGesture = useCallback(
     (event: { target: EventTarget | null }) => event.target !== diagramState.ref.current,
@@ -17,6 +19,8 @@ export const useDiagramInteraction = () => {
   const dragHandlers = useDiagramDragHandlers(cancelGesture);
   const wheelHandler = useDiagramWheelHandler(diagramState);
   const contextHandler = useContextMenu();
+
+  useResizeAction(diagramState.ref.recalculateSizeAndPosition, [store]);
 
   useGesture(
     {
