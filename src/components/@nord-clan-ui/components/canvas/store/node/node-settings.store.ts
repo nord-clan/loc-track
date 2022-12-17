@@ -9,11 +9,10 @@ import {
   COMPONENT_DEFAULT_TYPE,
   VisualComponents
 } from '../visual-component/visual-components.store';
-
-import { makeAutoObservable } from 'mobx';
 import type { INodeDefaultSettings } from './node.interface';
-import { NodeDefault } from '../../node/node-default';
-import { NodeLabel } from '../../node/node-label';
+import { makeAutoObservable } from 'mobx';
+import { NodeDefault } from '../../ui/node/node-default';
+import { NodeLabel } from '../../ui/node/node-label';
 
 export class NodeSettingsStore {
   private _visualComponents: VisualComponents<INodeComponentSettings, INodeVisualComponentProps> =

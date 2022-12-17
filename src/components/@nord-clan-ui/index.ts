@@ -25,9 +25,9 @@ export * from './components/dialog/dialog.store';
 export * from './components/canvas/ui/background/background-wrapper';
 
 //* - diagram - *//
-export * from './components/canvas/diagram/diagram';
-export * from './components/canvas/diagram/diagram-context';
-export * from './components/canvas/diagram/diagram-inner';
+export * from './components/canvas/ui/diagram/diagram';
+export * from './components/canvas/ui/diagram/diagram-context';
+export * from './components/canvas/ui/diagram/diagram-inner';
 
 //* - node - *//
 export * from './components/canvas/store/node/node-settings.store';
