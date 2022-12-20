@@ -10,8 +10,7 @@ export function useDiagramWheelHandler(state: IInteractionTranslateAndZoom): IWh
 
   const handlers = useMemo<IWheelHandler>(
     () => ({
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      onWheel: ({ direction: [_, yDirection], event }) => {
+      onWheel: ({ direction: [, yDirection], event }) => {
         if (!diagramState.ref.current || !diagramSettings.userInteraction.diagramZoom) return;
         event?.preventDefault();
         const rect = diagramState.ref.current.getBoundingClientRect();

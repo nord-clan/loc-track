@@ -1,4 +1,4 @@
-import type { Point } from '../../../helpers/point';
+import type { IPoint } from '../../../helpers/point';
 import type { DiagramStateStore } from '../store/diagram/diagram-state.store';
 import { computed, makeAutoObservable } from 'mobx';
 import { multiplyPoint } from '../../../helpers/point';
@@ -30,7 +30,7 @@ export class HtmlElement {
   /**
    * Size excluding diagram zoom.
    */
-  get sizeExcludingZoom(): Point | null {
+  get sizeExcludingZoom(): IPoint | null {
     if (this.boundingRect && this.boundingRect.diagramZoom) {
       return multiplyPoint(this.boundingRect.size, 1 / this.boundingRect.diagramZoom);
     }
@@ -40,7 +40,7 @@ export class HtmlElement {
   /**
    * Position excluding diagram zoom.
    */
-  get positionExcludingZoom(): Point | null {
+  get positionExcludingZoom(): IPoint | null {
     if (this.boundingRect && this.boundingRect.diagramZoom) {
       return multiplyPoint(this.boundingRect.position, 1 / this.boundingRect.diagramZoom);
     }
@@ -55,8 +55,8 @@ export class HtmlElement {
       const zoom = this._diagramState.getRenderedZoom();
 
       return {
-        position: [rect.x, rect.y] as Point,
-        size: [rect.width, rect.height] as Point,
+        position: [rect.x, rect.y] as IPoint,
+        size: [rect.width, rect.height] as IPoint,
         diagramZoom: zoom
       };
     }

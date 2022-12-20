@@ -1,4 +1,4 @@
-import type { Point } from '../../../../helpers/point';
+import type { IPoint } from '../../../../helpers/point';
 import styled from '@emotion/styled';
 
 //* --- NodeDefault ------------------------------------------------------------ *//
@@ -22,7 +22,7 @@ export const NodeLabelStyled = styled.div`
 
 //* --- NodeWrapper ------------------------------------------------------------ *//
 interface INodeWrapperStyledProps {
-  position: Point;
+  position: IPoint;
 }
 export const NodeWrapperStyled = styled.div<INodeWrapperStyledProps>`
   position: absolute;

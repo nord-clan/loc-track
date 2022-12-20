@@ -1,4 +1,4 @@
-import type { Point } from '../../../../helpers/point';
+import type { IPoint } from '../../../../helpers/point';
 import type { IVisualComponent } from '../../store/visual-component/visual-component-state.store';
 import { SvgBackground } from '../../ui/background/background-svg';
 import { createComponent } from './creator';
@@ -95,7 +95,7 @@ export interface ISvgBackgroundSettings {
 }
 
 export interface IBackgroundComponentProps<TSettings = unknown> {
-  diagramOffset: Point;
+  diagramOffset: IPoint;
   diagramZoom: number;
   settings?: TSettings;
 }

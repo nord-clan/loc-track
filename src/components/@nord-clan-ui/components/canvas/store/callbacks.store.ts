@@ -1,6 +1,6 @@
 import type { CanvasStore } from './canvas.store';
 import type { NodeState } from './node/node-state.store';
-import type { Point } from '../../../helpers/point';
+import type { IPoint } from '../../../helpers/point';
 import type { ErrorResult } from '../../../helpers/result';
 import type { INodeState, INodeExport } from './node/node.interface';
 
@@ -73,7 +73,7 @@ export class CallbacksStore {
     }
   };
 
-  nodePositionChanged = (node: NodeState, change: PropertyChange<Point>) => {
+  nodePositionChanged = (node: NodeState, change: PropertyChange<IPoint>) => {
     if (this._onNodePositionChanged) {
       this._onNodePositionChanged(
         {
@@ -206,7 +206,7 @@ export interface IOnDragStarted {
 
 export interface IOnDrag {
   nodes: NodeState[];
-  delta: Point;
+  delta: IPoint;
 }
 
 export interface IOnDragEnded {
@@ -217,7 +217,7 @@ export interface IOnNodePropertyChanged<TValue> extends PropertyChange<TValue> {
   node: NodeState;
 }
 
-export type OnNodePositionChanged = IOnNodePropertyChanged<Point>;
+export type OnNodePositionChanged = IOnNodePropertyChanged<IPoint>;
 
 export type OnNodeLabelChanged = IOnNodePropertyChanged<string | undefined>;
 

@@ -1,9 +1,10 @@
+import { useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { useCanvasStore } from '../store/useRootStore';
 import { useDiagramWheelHandler } from './useDiagramWheelHandler';
 import { useDiagramDragHandlers } from './useDiagramDragHandlers';
-import { useContextMenu } from './useContextMenu';
-import { useCallback } from 'react';
+import { useDiagramPinchHandlers } from './useDiagramPinchHandlers';
+import { useDiagramContextMenu } from './useDiagramContextMenu';
 import { useResizeAction } from '../events/useResizeAction';
 
 export const useDiagramInteraction = () => {
@@ -15,15 +16,16 @@ export const useDiagramInteraction = () => {
     [diagramState.ref]
   );
 
-  // const pinchHandlers = useDiagramPinchHandlers(cancelGesture);
+  const pinchHandlers = useDiagramPinchHandlers(cancelGesture);
   const dragHandlers = useDiagramDragHandlers(cancelGesture);
   const wheelHandler = useDiagramWheelHandler(diagramState);
-  const contextHandler = useContextMenu();
+  const contextHandler = useDiagramContextMenu(diagramState);
 
   useResizeAction(diagramState.ref.recalculateSizeAndPosition, [store]);
 
   useGesture(
     {
+      ...pinchHandlers,
       ...dragHandlers,
       ...wheelHandler,
       ...contextHandler

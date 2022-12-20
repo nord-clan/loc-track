@@ -2,6 +2,19 @@ import type { IContextMenuProps } from '../../utils/create-component/context-men
 import { observer } from 'mobx-react-lite';
 import { ContextMenuStyled } from './styles';
 
-export const ContextMenu: IContextMenuProps = observer(() => {
-  return <ContextMenuStyled>ContextMenu</ContextMenuStyled>;
+export const ContextMenu: IContextMenuProps = observer((props) => {
+  const {
+    canvasStore: { diagramState },
+    settings
+  } = props;
+
+  const { clickPosition, isContextMenuVisible } = diagramState;
+
+  return (
+    <ContextMenuStyled
+      isVisible={isContextMenuVisible ?? settings?.isVisible}
+      position={clickPosition ?? settings?.position}>
+      ContextMenu
+    </ContextMenuStyled>
+  );
 });

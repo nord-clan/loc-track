@@ -2,7 +2,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "noEmit": true,
-    "target": "esnext",
+    "target": "es5",
     "module": "esnext",
     "jsx": "preserve",
     "allowJs": true,
@@ -16,7 +16,8 @@
     // "noImplicitAny": false,
     "useDefineForClassFields": true,
     "typeRoots": ["./node_modules/@types"],
-    "lib": ["dom"],
+    "jsxImportSource": "@emotion/react",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "outDir": ".next",
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -40,5 +41,11 @@
     "strict": false
   },
   "exclude": ["./node_modules/**/*"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "postcss.config.js", "src/components/@nord-clan-ui/components/canvas/utils/.gitkeep"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "postcss.config.js",
+    "src/components/@nord-clan-ui/components/canvas/utils/.gitkeep"
+  ]
 }

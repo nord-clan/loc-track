@@ -1,5 +1,5 @@
 import type { MutableRefObject } from 'react';
-import type { Point } from './point';
+import type { IPoint } from './point';
 import { v4 } from 'uuid';
 
 export type TControllerRef<T> = MutableRefObject<T | undefined>;
@@ -28,7 +28,7 @@ export function isBoolean(value: unknown): value is boolean {
   return value != null && typeof value === 'boolean';
 }
 
-export function clampValue(value: number, interval: Point) {
+export function clampValue(value: number, interval: IPoint) {
   return Math.min(Math.max(value, interval[0]), interval[1]);
 }
 
@@ -43,7 +43,7 @@ export function combineArrays<T>(...arrays: (T[] | undefined)[]): T[] {
 }
 
 export type BoundingBox = {
-  topLeftCorner: Point;
-  bottomRightCorner: Point;
-  size: Point;
+  topLeftCorner: IPoint;
+  bottomRightCorner: IPoint;
+  size: IPoint;
 };

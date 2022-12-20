@@ -2,7 +2,7 @@ import type {
   IComponentDefinition,
   IVisualComponent
 } from '../visual-component/visual-component-state.store';
-import type { Point } from '../../../../helpers/point';
+import type { IPoint } from '../../../../helpers/point';
 import type { IUserInteraction } from '../interaction-settings.store';
 import type { IBackgroundComponentProps } from '../../utils/create-component/background';
 import type { IControlComponentProps } from '../../utils/create-component/control';
@@ -21,7 +21,7 @@ export class DiagramSettingsStore {
   private _controlComponentState: VisualComponent<IControlComponentProps>;
   private _contextMenuComponentState: VisualComponent<IContextMenuComponentProps>;
 
-  private _zoomInterval: Point = defaultZoomInterval;
+  private _zoomInterval: IPoint = defaultZoomInterval;
   private _zoomToFitSettings: IZoomToFitSettings = defaultZoomToFitSettings;
 
   constructor() {
@@ -75,14 +75,14 @@ export class DiagramSettingsStore {
     return this._zoomToFitSettings;
   }
 
-  setZoomInterval = (value: Point | null | undefined) => {
+  setZoomInterval = (value: IPoint | null | undefined) => {
     this._zoomInterval = value ?? defaultZoomInterval;
   };
 }
 
 //* --- Default --- *//
 
-const defaultZoomInterval: Point = [0.1, 3];
+const defaultZoomInterval: IPoint = [0.1, 3];
 const defaultZoomToFitSettings: IZoomToFitSettings = {
   padding: [30, 30],
   zoomInterval: [0.1, 1.5],
@@ -98,7 +98,7 @@ export interface IDiagramSettings {
   controlComponent?: IComponent<IControlComponentProps>;
   contextMenuComponent?: IComponent<IContextMenuComponentProps>;
 
-  zoomInterval?: Point;
+  zoomInterval?: IPoint;
   zoomToFitSettings?: Partial<IZoomToFitSettings>;
 }
 
@@ -107,7 +107,7 @@ type IComponent<TComponentProps> =
   | IVisualComponent<TComponentProps>;
 
 export interface IZoomToFitSettings {
-  padding: Point;
-  zoomInterval: Point;
+  padding: IPoint;
+  zoomInterval: IPoint;
   callOnImportState: boolean;
 }

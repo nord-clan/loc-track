@@ -1,5 +1,6 @@
 import type { CanvasStore } from '../../store/canvas.store';
 import type { IVisualComponent } from '../../store/visual-component/visual-component-state.store';
+import type { IPoint } from '../../../../helpers/point';
 import { createComponent } from './creator';
 import { ContextMenu } from '../../ui/context-menu/context-menu';
 
@@ -10,6 +11,8 @@ export const createDefaultContextMenu = (settings?: Partial<IContextMenuSettings
 };
 
 export interface IContextMenuSettings {
+  position: IPoint;
+  isVisible: boolean;
   classes?: string[];
   style?: React.CSSProperties;
   width?: string;
@@ -17,6 +20,8 @@ export interface IContextMenuSettings {
 }
 
 export const defaultSettings: IContextMenuSettings = {
+  position: [0, 0],
+  isVisible: false,
   width: '100px',
   height: '100px'
 };

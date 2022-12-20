@@ -1,4 +1,4 @@
-import type { Point } from '../../../../helpers/point';
+import type { IPoint } from '../../../../helpers/point';
 import type { CanvasStore } from '../canvas.store';
 import type { PropertyChange } from '../callbacks.store';
 import { makeAutoObservable, reaction } from 'mobx';
@@ -11,7 +11,7 @@ import { generateTransform } from '../../../../helpers/transformation';
 export class NodeState {
   private _id: string;
   private _label?: string;
-  private _position: Point;
+  private _position: IPoint;
   private _ref: HtmlElement;
   private _type?: string;
   private _selected: boolean;
@@ -116,7 +116,10 @@ export class NodeState {
    * @param ignoreSnapping - do not take into account snapping to grid
    * @returns `undefined` if position did not change
    */
-  setPosition = (newPosition: Point, ignoreSnapping = false): PropertyChange<Point> | undefined => {
+  setPosition = (
+    newPosition: IPoint,
+    ignoreSnapping = false
+  ): PropertyChange<IPoint> | undefined => {
     const change = this._setPosition(newPosition, ignoreSnapping);
 
     if (change) {
@@ -127,9 +130,9 @@ export class NodeState {
   };
 
   private _setPosition = (
-    newPosition: Point,
+    newPosition: IPoint,
     ignoreSnapping = false
-  ): PropertyChange<Point> | undefined => {
+  ): PropertyChange<IPoint> | undefined => {
     const snap = this._store.nodeSettings.gridSnap;
     if (!ignoreSnapping && snap) {
       newPosition = [snapPosition(newPosition[0], snap[0]), snapPosition(newPosition[1], snap[1])];
@@ -154,9 +157,9 @@ export class NodeState {
    * would be [3,9], node current position [10,10] and snap [5,5],
    * the node position would be set to [10,15] and remainder equals [3,4]
    */
-  moveBy = (vector: Point, ignoreSnapping = false): Point | undefined => {
+  moveBy = (vector: IPoint, ignoreSnapping = false): IPoint | undefined => {
     let newPos = addPoints(this.position, vector);
-    let remainder: Point | undefined;
+    let remainder: IPoint | undefined;
     const snap = this._store.nodeSettings.gridSnap;
 
     if (!ignoreSnapping && snap) {
@@ -354,7 +357,7 @@ function snapMoveByVector(pos: number, vec: number, snapValue: number) {
 
 export interface INodeStateWithoutId {
   label?: string;
-  position: Point;
+  position: IPoint;
   type?: string;
   data?: unknown;
   isSelectionEnabled?: boolean;
@@ -375,7 +378,7 @@ export interface INodeState extends INodeStateWithoutId {
 
 export interface INodeStateDiff {
   label?: string | null;
-  position?: Point;
+  position?: IPoint;
   data?: unknown;
   isSelectionEnabled?: boolean;
   isDragEnabled?: boolean;
