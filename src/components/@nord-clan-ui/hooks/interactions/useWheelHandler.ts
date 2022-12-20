@@ -1,11 +1,11 @@
 import type { check, IInteractionTranslateAndZoom } from './common';
 import type { EventTypes, Handler } from '@use-gesture/react';
 import { useMemo } from 'react';
-import { useCanvasStore } from '../store/useRootStore';
+import { useRootStore } from '../store/useRootStore';
 import { subtractPoints } from '../../helpers/point';
 
-export function useDiagramWheelHandler(state: IInteractionTranslateAndZoom): IWheelHandler {
-  const store = useCanvasStore();
+export function useWheelHandler(state: IInteractionTranslateAndZoom): IWheelHandler {
+  const store = useRootStore();
   const { diagramState, diagramSettings } = store;
 
   const handlers = useMemo<IWheelHandler>(

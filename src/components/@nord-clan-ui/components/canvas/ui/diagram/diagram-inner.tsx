@@ -1,6 +1,6 @@
 import type { FC, ReactNode, PropsWithChildren } from 'react';
 import { useMemo } from 'react';
-import { useCanvasStore } from '#/components/@nord-clan-ui/hooks/store/useRootStore';
+import { useRootStore } from '#/components/@nord-clan-ui/hooks/store/useRootStore';
 import { BackgroundWrapper } from '../background/background-wrapper';
 import { observer } from 'mobx-react-lite';
 import { DigramInnerStyled } from './styles';
@@ -16,7 +16,7 @@ export interface IDiagramInnerProps extends PropsWithChildren {
 
 export const DigramInner: FC<IDiagramInnerProps> = observer((props) => {
   const { children, diagramStyles: style } = props;
-  const store = useCanvasStore();
+  const store = useRootStore();
   const { ref } = store.diagramState;
 
   useDiagramInteraction();

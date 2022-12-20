@@ -1,5 +1,5 @@
 import type { CornerPosition } from '../../../../helpers/position';
-import type { CanvasStore } from '../../store/canvas.store';
+import type { RootStore } from '../../store/root.store';
 import type { IVisualComponent } from '../../store/visual-component/visual-component-state.store';
 import { Control } from '../../ui/control/control';
 import { createComponent } from './creator';
@@ -64,6 +64,6 @@ export const defaultSettings: IControlSettings = {
 };
 
 export interface IControlComponentProps<TSettings = unknown> {
-  canvasStore: CanvasStore;
+  store: RootStore;
   settings?: TSettings;
 }

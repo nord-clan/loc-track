@@ -10,7 +10,7 @@ import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 
 export const Control: IControlProps = observer((props) => {
   const {
-    canvasStore: { diagramState },
+    store: { diagramState },
     settings
   } = props;
 

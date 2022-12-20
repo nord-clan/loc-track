@@ -4,7 +4,7 @@ import { ContextMenuStyled } from './styles';
 
 export const ContextMenu: IContextMenuProps = observer((props) => {
   const {
-    canvasStore: { diagramState },
+    store: { diagramState },
     settings
   } = props;
 

@@ -1,18 +1,18 @@
 import type { FC } from 'react';
 import type { INodeState } from '../../store/node/node-state.store';
-import type { ISettings } from '../../store/canvas.store';
+import type { ISettings } from '../../store/root.store';
 import { useEffect, useRef, createContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { CanvasStore } from '../../store/canvas.store';
+import { RootStore } from '../../store/root.store';
 import { useNewStore } from '../../../../helpers/stores';
 import useIsomorphicLayoutEffect from '../../../../hooks/events/useIsomorphicLayoutEffect';
 
-export const CanvasStoreContext = createContext<CanvasStore | null>(null);
+export const RootStoreContext = createContext<RootStore | null>(null);
 
 export const DiagramContext: FC<IDiagramContextProps> = observer((props) => {
   const { initState, storeRef, settings, children } = props;
 
-  const store = useNewStore(CanvasStore);
+  const store = useNewStore(RootStore);
   const { diagramState, importSettings, importState, callbacks } = store;
   const { renderImportedRequestId } = diagramState;
 
@@ -39,13 +39,13 @@ export const DiagramContext: FC<IDiagramContextProps> = observer((props) => {
     }
   }, [renderImportedRequestId]);
 
-  return <CanvasStoreContext.Provider value={store}>{children}</CanvasStoreContext.Provider>;
+  return <RootStoreContext.Provider value={store}>{children}</RootStoreContext.Provider>;
 });
 
 export type IDiagramContextProps = React.PropsWithChildren<{
   settings?: ISettings;
   initState?: IDiagramInitState;
-  storeRef?: React.MutableRefObject<CanvasStore | null>;
+  storeRef?: React.MutableRefObject<RootStore | null>;
 }>;
 
 export interface IDiagramInitState {

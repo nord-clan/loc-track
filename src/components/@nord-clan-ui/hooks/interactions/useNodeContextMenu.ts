@@ -1,6 +1,5 @@
-import type { EventTypes, Handler, SharedGestureState } from '@use-gesture/react';
+import type { SharedGestureState } from '@use-gesture/react';
 import type { DiagramStateStore } from '../../components/canvas/store/diagram/diagram-state.store';
-import type { check } from './common';
 import { useCallback, useMemo } from 'react';
 import useEventListener from '../events/useEventListener';
 
@@ -19,7 +18,11 @@ export function useDiagramContextMenu(state: DiagramStateStore) {
     []
   );
 
-  const handleHideContextMenu = useCallback(() => toggleContextMenuVisible(false), []);
+  const handleHideContextMenu = useCallback((e) => {
+    console.log('>', e);
+
+    toggleContextMenuVisible(false);
+  }, []);
 
   useEventListener('click', handleHideContextMenu);
   useEventListener('wheel', handleHideContextMenu);

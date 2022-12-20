@@ -8,11 +8,20 @@ interface IProps {
 
 export const ContextMenuStyled = styled.div<IProps>`
   position: fixed;
-  width: 100px;
-  height: 100px;
-  /* top: 0; */
-  /* left: 0; */
-  background-color: red;
+  width: 300px;
+  height: 400px;
+  border-radius: 16px;
+
+  background-color: ${({ theme }) => theme.palette.bg.headerBlur};
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
+  border: 1px solid ${({ theme }) => theme.palette.border.content};
+  padding: 16px;
+  color: ${({ theme }) => theme.palette.color.textInvert};
+  user-select: none;
+  font-size: 1rem;
+  font-weight: 500;
+
   top: ${({ position }) => position[1]}px;
   left: ${({ position }) => position[0]}px;
   overflow: visible;

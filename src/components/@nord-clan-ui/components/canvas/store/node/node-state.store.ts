@@ -1,6 +1,6 @@
 import type { IPoint } from '../../../../helpers/point';
-import type { CanvasStore } from '../canvas.store';
-import type { PropertyChange } from '../callbacks.store';
+import type { RootStore } from '../root.store';
+import type { PropertyChange } from '../callbacks/callbacks.store';
 import { makeAutoObservable, reaction } from 'mobx';
 import { addPoints, arePointsEqual } from '../../../../helpers/point';
 import { HtmlElement } from '../../ui/html-element';
@@ -20,9 +20,9 @@ export class NodeState {
   private _isSelectionEnabled?: boolean;
   private _isDragEnabled?: boolean;
   private _isDragActive: boolean;
-  private _store: CanvasStore;
+  private _store: RootStore;
 
-  constructor(store: CanvasStore, id: string, state?: INodeStateWithoutId) {
+  constructor(store: RootStore, id: string, state?: INodeStateWithoutId) {
     this._store = store;
 
     this._id = id;

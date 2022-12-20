@@ -3,14 +3,14 @@ import type {
   IVisualComponent
 } from '../visual-component/visual-component-state.store';
 import type { IPoint } from '../../../../helpers/point';
-import type { IUserInteraction } from '../interaction-settings.store';
+import type { IUserInteraction } from '../interaction/interaction-settings.store';
 import type { IBackgroundComponentProps } from '../../utils/create-component/background';
 import type { IControlComponentProps } from '../../utils/create-component/control';
 import type { IContextMenuComponentProps } from '../../utils/create-component/context-menu';
 import { createDefaultContextMenu } from '../../utils/create-component/context-menu';
 import { createDefaultControl } from '../../utils/create-component/control';
 import { makeAutoObservable } from 'mobx';
-import { InteractionSettingsStore } from '../interaction-settings.store';
+import { InteractionSettingsStore } from '../interaction/interaction-settings.store';
 import { VisualComponentWithDefault as VisualComponent } from '../visual-component/visual-component-with-default.store';
 import { createDefaultBackground } from '../../utils/create-component/background';
 

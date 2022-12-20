@@ -3,6 +3,7 @@ import type { NodeState } from '../../store/node/node-state.store';
 import { observer } from 'mobx-react-lite';
 import { createContext } from 'react';
 import { NodeWrapperStyled } from './styles';
+import { useNodeInteraction } from '../../../../hooks/interactions/useNodeInteraction';
 
 export const NodeWrapper: FC<{ node: NodeState }> = observer(({ node }) => {
   const {
@@ -12,8 +13,7 @@ export const NodeWrapper: FC<{ node: NodeState }> = observer(({ node }) => {
     componentDefinition: { Component, settings }
   } = node;
 
-  // TODO
-  // useNodeInteraction(node);
+  useNodeInteraction(node);
 
   return (
     <NodeContext.Provider value={node}>

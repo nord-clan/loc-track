@@ -1,14 +1,13 @@
 import { useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
-import { useCanvasStore } from '../store/useRootStore';
-import { useDiagramWheelHandler } from './useDiagramWheelHandler';
-import { useDiagramDragHandlers } from './useDiagramDragHandlers';
-import { useDiagramPinchHandlers } from './useDiagramPinchHandlers';
-import { useDiagramContextMenu } from './useDiagramContextMenu';
+import { useRootStore } from '../store/useRootStore';
+import { useWheelHandler } from './useWheelHandler';
+import { useDragHandlers } from './useDragHandlers';
+import { usePinchHandlers } from './usePinchHandlers';
 import { useResizeAction } from '../events/useResizeAction';
 
 export const useDiagramInteraction = () => {
-  const store = useCanvasStore();
+  const store = useRootStore();
   const { diagramState, diagramSettings } = store;
 
   const cancelGesture = useCallback(
@@ -16,10 +15,9 @@ export const useDiagramInteraction = () => {
     [diagramState.ref]
   );
 
-  const pinchHandlers = useDiagramPinchHandlers(cancelGesture);
-  const dragHandlers = useDiagramDragHandlers(cancelGesture);
-  const wheelHandler = useDiagramWheelHandler(diagramState);
-  const contextHandler = useDiagramContextMenu(diagramState);
+  const pinchHandlers = usePinchHandlers(cancelGesture);
+  const dragHandlers = useDragHandlers(cancelGesture);
+  const wheelHandler = useWheelHandler(diagramState);
 
   useResizeAction(diagramState.ref.recalculateSizeAndPosition, [store]);
 
@@ -28,7 +26,7 @@ export const useDiagramInteraction = () => {
       ...pinchHandlers,
       ...dragHandlers,
       ...wheelHandler,
-      ...contextHandler
+      onContextMenu: ({ event }) => event.preventDefault()
     },
     {
       target: diagramState.ref,

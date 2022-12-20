@@ -1,19 +1,23 @@
 import type { INodeExport, INodeState } from './node/node-state.store';
 import type { INodesSettings } from './node/node-settings.store';
 import type { IDiagramState } from './diagram/diagram-state.store';
-import type { ICallbacks } from './callbacks.store';
+import type { ICallbacks } from './callbacks/callbacks.store';
 import { DiagramSettingsStore } from './diagram/diagram-settings.store';
 import { NodeSettingsStore } from './node/node-settings.store';
 import { DiagramStateStore } from './diagram/diagram-state.store';
 import { NodeStore } from './node/node.store';
-import { CallbacksStore } from './callbacks.store';
+import { CallbacksStore } from './callbacks/callbacks.store';
+import { DragState } from './drag/drag-state.store';
+import { SelectionStateStore } from './selection/selection-state.store';
 
-export class CanvasStore {
+export class RootStore {
   private _diagramStateStore: DiagramStateStore;
   private _diagramSettingsStore: DiagramSettingsStore;
   private _nodeStore: NodeStore;
   private _nodeSettingsStore: NodeSettingsStore;
   private _callbacksStore: CallbacksStore;
+  private _dragStateStore: DragState;
+  private _selectionStateStore: SelectionStateStore;
 
   constructor() {
     this._diagramSettingsStore = new DiagramSettingsStore();
@@ -21,6 +25,8 @@ export class CanvasStore {
     this._nodeStore = new NodeStore(this);
     this._nodeSettingsStore = new NodeSettingsStore();
     this._callbacksStore = new CallbacksStore(this);
+    this._dragStateStore = new DragState();
+    this._selectionStateStore = new SelectionStateStore();
   }
 
   get diagramSettings() {
@@ -31,7 +37,7 @@ export class CanvasStore {
     return this._diagramStateStore;
   }
 
-  get nodeStore() {
+  get node() {
     return this._nodeStore;
   }
 
@@ -41,6 +47,14 @@ export class CanvasStore {
 
   get callbacks() {
     return this._callbacksStore;
+  }
+
+  get dragState() {
+    return this._dragStateStore;
+  }
+
+  get selectionState() {
+    return this._selectionStateStore;
   }
 
   importState = (nodes?: INodeState[]) => {

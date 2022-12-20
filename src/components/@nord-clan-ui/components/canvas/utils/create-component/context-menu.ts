@@ -1,4 +1,4 @@
-import type { CanvasStore } from '../../store/canvas.store';
+import type { RootStore } from '../../store/root.store';
 import type { IVisualComponent } from '../../store/visual-component/visual-component-state.store';
 import type { IPoint } from '../../../../helpers/point';
 import { createComponent } from './creator';
@@ -27,6 +27,6 @@ export const defaultSettings: IContextMenuSettings = {
 };
 
 export interface IContextMenuComponentProps<TSettings = unknown> {
-  canvasStore: CanvasStore;
+  store: RootStore;
   settings?: TSettings;
 }

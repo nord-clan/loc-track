@@ -1,5 +1,5 @@
 import type { INodeExport, INodeState } from './node-state.store';
-import type { CanvasStore } from '../canvas.store';
+import type { RootStore } from '../root.store';
 import type { BoundingBox } from '../../../../helpers/index';
 import type { IPoint } from '../../../../helpers/point';
 import type { SuccessOrErrorResult } from '../../../../helpers/result';
@@ -16,9 +16,9 @@ import { v4 } from 'uuid';
 
 export class NodeStore {
   private _nodes = new Map<string, NodeState>();
-  private _store: CanvasStore;
+  private _store: RootStore;
 
-  constructor(store: CanvasStore) {
+  constructor(store: RootStore) {
     this._store = store;
 
     makeAutoObservable(this);

@@ -4,7 +4,7 @@ import type {
   IInteractionTranslateAndZoom
 } from '../../../../hooks/interactions/common';
 import type { IPoint } from '../../../../helpers/point';
-import type { CanvasStore } from '../canvas.store';
+import type { RootStore } from '../root.store';
 import type { BoundingBox } from '../../../../helpers/index';
 import { addPoints, multiplyPoint, subtractPoints } from '../../../../helpers/point';
 import { HtmlElement } from '../../ui/html-element';
@@ -18,13 +18,13 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
   private _zoom: number;
   private _offset: IPoint;
   private _ref: HtmlElement;
-  private _store: CanvasStore;
+  private _store: RootStore;
 
   private _renderImportedRequestId = -1;
 
-  constructor(canvasStore: CanvasStore) {
+  constructor(store: RootStore) {
     this._ref = new HtmlElement(null, this);
-    this._store = canvasStore;
+    this._store = store;
     this.import();
 
     makeAutoObservable<DiagramStateStore, '_store'>(this, {
@@ -167,7 +167,7 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
   };
 
   private _getNodesBoundingBoxWithPadding = (): BoundingBox => {
-    const nodesBoundingBox = this._store.nodeStore.getNodesBoundingBox();
+    const nodesBoundingBox = this._store.node.getNodesBoundingBox();
     const { padding } = this._store.diagramSettings.zoomToFitSettings;
     nodesBoundingBox.topLeftCorner = subtractPoints(nodesBoundingBox.topLeftCorner, padding);
     nodesBoundingBox.bottomRightCorner = addPoints(nodesBoundingBox.bottomRightCorner, padding);

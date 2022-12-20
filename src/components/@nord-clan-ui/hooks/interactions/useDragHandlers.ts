@@ -1,7 +1,7 @@
 import type { EventTypes, Handler } from '@use-gesture/react';
 import type { check } from './common';
 import { useMemo } from 'react';
-import { useCanvasStore } from '../store/useRootStore';
+import { useRootStore } from '../store/useRootStore';
 import { addPoints } from '../../helpers/point';
 import { useNotifyRef } from '../events/useNotifyRef';
 import { useDiagramCursor } from './useCursor';
@@ -14,10 +14,10 @@ export interface IDragHandlers {
   onDragEnd: DragEventHandler;
 }
 
-export function useDiagramDragHandlers(
+export function useDragHandlers(
   cancelEvent: (event: { target: EventTarget | null }) => boolean
 ): IDragHandlers {
-  const store = useCanvasStore();
+  const store = useRootStore();
   const { diagramState, diagramSettings } = store;
 
   const activeRef = useNotifyRef(false);

@@ -1,8 +1,8 @@
-import type { CanvasStore } from './canvas.store';
-import type { NodeState } from './node/node-state.store';
-import type { IPoint } from '../../../helpers/point';
-import type { ErrorResult } from '../../../helpers/result';
-import type { INodeState, INodeExport } from './node/node.interface';
+import type { RootStore } from '../root.store';
+import type { NodeState } from '../node/node-state.store';
+import type { IPoint } from '../../../../helpers/point';
+import type { ErrorResult } from '../../../../helpers/result';
+import type { INodeState, INodeExport } from '../node/node.interface';
 
 export class CallbacksStore {
   private _onNodesAddResult?: ICallbacks['onNodesAddResult'];
@@ -18,9 +18,9 @@ export class CallbacksStore {
   private _onDragEnded?: ICallbacks['onDragEnded'];
   private _onImportedStateRendered?: ICallbacks['onImportedStateRendered'];
 
-  private _store: CanvasStore;
+  private _store: RootStore;
 
-  constructor(store: CanvasStore) {
+  constructor(store: RootStore) {
     this._store = store;
     this.import();
   }
@@ -184,21 +184,21 @@ export class CallbacksStore {
 }
 
 export interface ICallbacks {
-  onNodesAddResult?: (info: IOnNodesAddResult, store: CanvasStore) => void;
-  onNodesRemoveResult?: (info: IOnNodesRemoveResult, store: CanvasStore) => void;
-  onNodePositionChanged?: (info: OnNodePositionChanged, store: CanvasStore) => void;
-  onNodeLabelChanged?: (info: OnNodeLabelChanged, store: CanvasStore) => void;
-  onNodeTypeChanged?: (info: OnNodeTypeChanged, store: CanvasStore) => void;
-  onNodeDataChanged?: (info: OnNodeDataChanged, store: CanvasStore) => void;
+  onNodesAddResult?: (info: IOnNodesAddResult, store: RootStore) => void;
+  onNodesRemoveResult?: (info: IOnNodesRemoveResult, store: RootStore) => void;
+  onNodePositionChanged?: (info: OnNodePositionChanged, store: RootStore) => void;
+  onNodeLabelChanged?: (info: OnNodeLabelChanged, store: RootStore) => void;
+  onNodeTypeChanged?: (info: OnNodeTypeChanged, store: RootStore) => void;
+  onNodeDataChanged?: (info: OnNodeDataChanged, store: RootStore) => void;
   onNodeIsSelectionEnabledChanged?: (
     info: OnNodeIsSelectionEnabledChanged,
-    store: CanvasStore
+    store: RootStore
   ) => void;
-  onNodeIsDragEnabledChanged?: (info: OnNodeIsDragEnabledChanged, store: CanvasStore) => void;
-  onDragStarted?: (info: IOnDragStarted, store: CanvasStore) => void;
-  onDrag?: (info: IOnDrag, store: CanvasStore) => void;
-  onDragEnded?: (info: IOnDragEnded, store: CanvasStore) => void;
-  onImportedStateRendered?: (store: CanvasStore) => void;
+  onNodeIsDragEnabledChanged?: (info: OnNodeIsDragEnabledChanged, store: RootStore) => void;
+  onDragStarted?: (info: IOnDragStarted, store: RootStore) => void;
+  onDrag?: (info: IOnDrag, store: RootStore) => void;
+  onDragEnded?: (info: IOnDragEnded, store: RootStore) => void;
+  onImportedStateRendered?: (store: RootStore) => void;
 }
 export interface IOnDragStarted {
   nodes: NodeState[];

@@ -4,12 +4,12 @@ import type { IPoint } from '../../helpers/point';
 import { useMemo, useRef } from 'react';
 import { subtractPoints } from '../../helpers/point';
 import { useNotifyRef } from '../events/useNotifyRef';
-import { useCanvasStore } from '../store/useRootStore';
+import { useRootStore } from '../store/useRootStore';
 
-export function useDiagramPinchHandlers(
+export function usePinchHandlers(
   cancel: (event: { target: EventTarget | null }) => boolean
 ): IPinchHandlers {
-  const { diagramState, diagramSettings } = useCanvasStore();
+  const { diagramState, diagramSettings } = useRootStore();
 
   const activeRef = useNotifyRef(false);
   const pinchState = useRef<IPinchState>({
