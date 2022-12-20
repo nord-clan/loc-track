@@ -61,7 +61,7 @@ export const TabsSliderItemStyled = styled.li<TabsSliderItemStyledTypes>`
   color: ${({ theme }) => theme.palette?.color?.text};
   list-style: none;
 
-  > :first-child {
+  > :first-of-type {
     display: flex;
     justify-content: center;
     align-items: center;

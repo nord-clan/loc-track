@@ -33,4 +33,9 @@ declare module 'react' {
   }
 }
 
+declare module '*.svg' {
+  const content: unknown;
+  export default content;
+}
+
 export {};

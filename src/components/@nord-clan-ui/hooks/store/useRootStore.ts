@@ -1,5 +1,5 @@
-import type { CanvasStore } from '../../components/canvas/store/canvas.store';
+import type { RootStore } from '../../components/canvas/store/root.store';
 import { useContext } from 'react';
-import { CanvasStoreContext } from '../../components/canvas/diagram/diagram-context';
+import { RootStoreContext } from '../../components/canvas/ui/diagram/diagram-context';
 
-export const useCanvasStore = () => useContext(CanvasStoreContext) as CanvasStore;
+export const useRootStore = () => useContext(RootStoreContext) as RootStore;

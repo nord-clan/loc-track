@@ -26,8 +26,6 @@ const Home: NextPageWithLayout = () => {
           ]
         }}
       />
-
-      {/* <img src="http://localhost:3000/assets/ggd.svg" alt="ad" /> */}
     </HomeStyled>
   );
 };

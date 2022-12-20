@@ -1,11 +1,11 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class VisualComponentState<TComponentProps, TSettings> {
-  private _component: VisualComponent<TComponentProps>;
+  private _component: IVisualComponent<TComponentProps>;
   private _settings: TSettings | null = null;
 
   constructor(
-    component: IComponentDefinition<TComponentProps, TSettings> | VisualComponent<TComponentProps>
+    component: IComponentDefinition<TComponentProps, TSettings> | IVisualComponent<TComponentProps>
   ) {
     this.import(component);
     makeObservable<VisualComponentState<TComponentProps, TSettings>, '_component' | '_settings'>(
@@ -23,7 +23,7 @@ export class VisualComponentState<TComponentProps, TSettings> {
   import = (
     newComponent:
       | IComponentDefinition<TComponentProps, TSettings>
-      | VisualComponent<TComponentProps>
+      | IVisualComponent<TComponentProps>
   ) => {
     const _newComponent = newComponent as IComponentDefinition<TComponentProps, TSettings>;
     this._component = _newComponent.Component;
@@ -54,9 +54,9 @@ export interface IVisualComponentProps<TEntity, TSettings> {
   settings: TSettings | null;
 }
 
-export type VisualComponent<TComponentProps> = React.FunctionComponent<TComponentProps>;
+export type IVisualComponent<TComponentProps> = React.FunctionComponent<TComponentProps>;
 
 export interface IComponentDefinition<TComponentProps, TSettings> {
-  Component: VisualComponent<TComponentProps>;
+  Component: IVisualComponent<TComponentProps>;
   settings?: TSettings;
 }

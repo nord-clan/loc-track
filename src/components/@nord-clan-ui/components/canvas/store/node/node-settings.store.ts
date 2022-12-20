@@ -1,5 +1,5 @@
 import type { IVisualComponentsObject } from '../visual-component/visual-components.store';
-import type { Point } from '../../../../helpers/point';
+import type { IPoint } from '../../../../helpers/point';
 import type { NodeState } from './node-state.store';
 import type {
   IComponentDefinition,
@@ -9,18 +9,17 @@ import {
   COMPONENT_DEFAULT_TYPE,
   VisualComponents
 } from '../visual-component/visual-components.store';
-
-import { makeAutoObservable } from 'mobx';
 import type { INodeDefaultSettings } from './node.interface';
-import { NodeDefault } from '../../node/node-default';
-import { NodeLabel } from '../../node/node-label';
+import { makeAutoObservable } from 'mobx';
+import { NodeDefault } from '../../ui/node/node-default';
+import { NodeLabel } from '../../ui/node/node-label';
 
 export class NodeSettingsStore {
   private _visualComponents: VisualComponents<INodeComponentSettings, INodeVisualComponentProps> =
     new VisualComponents<INodeComponentSettings, INodeVisualComponentProps>({
       [COMPONENT_DEFAULT_TYPE]: this.createNodeDefault()
     });
-  private _gridSnap: Point | null;
+  private _gridSnap: IPoint | null;
   constructor() {
     this.setGridSnap();
     makeAutoObservable(this);
@@ -39,7 +38,7 @@ export class NodeSettingsStore {
     return this._gridSnap;
   }
 
-  setGridSnap = (gridSnap?: number | Point) => {
+  setGridSnap = (gridSnap?: number | IPoint) => {
     if (!gridSnap) {
       this._gridSnap = null;
     } else if (typeof gridSnap === 'number') {
@@ -75,5 +74,5 @@ export interface INodesSettings
     INodeComponentSettings,
     INodeVisualComponentProps<INodeComponentSettings>
   > {
-  gridSnap?: number | Point;
+  gridSnap?: number | IPoint;
 }

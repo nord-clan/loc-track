@@ -1,10 +1,9 @@
 import type { CheckboxStore, ICheckboxStoreParams } from './checkbox.store';
 import type { FC } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useRef, useEffect } from 'react';
-import { getId } from '../../helpers';
 import { HiFingerPrint } from 'react-icons/hi';
 import { CheckboxStyled } from './checkbox.style';
+import { setupStoreId } from '../../helpers/stores';
 
 export const Checkbox: FC<{ store?: CheckboxStore }> = observer(({ store }) => {
   if (!store) {
@@ -15,14 +14,7 @@ export const Checkbox: FC<{ store?: CheckboxStore }> = observer(({ store }) => {
   const { onClick, label, labelActive } = store.getParams<ICheckboxStoreParams>();
   const { isDisabled, isVisible } = store.state;
 
-  const id = useRef<string>(getId());
-
-  useEffect(() => {
-    store.components.add(id.current);
-    return () => {
-      store.components.remove(id.current);
-    };
-  }, []);
+  const id = setupStoreId(store);
 
   if (!isVisible) {
     return null;

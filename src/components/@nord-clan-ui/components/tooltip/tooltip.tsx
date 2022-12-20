@@ -1,23 +1,26 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import type { PropsWithChildren, MutableRefObject, FC } from 'react';
-import type { ITooltipController, ITooltipProps } from './tooltip.store';
+import type { ITooltipController, ITooltipParams } from './tooltip.store';
 import { usePopper } from 'react-popper';
 import { observer } from 'mobx-react-lite';
 import { TooltipStore } from './tooltip.store';
 import { TooltipStyled } from './tooltip.style';
-import cn from 'classnames';
+import { useNewStore, setController } from '../../helpers/stores';
 
-export const Tooltip: FC<
-  PropsWithChildren<ITooltipProps> & {
+type ITooltipProps = PropsWithChildren<
+  {
     controllerRef?: MutableRefObject<ITooltipController | undefined>;
-  }
-> = (props) => {
+  } & ITooltipParams
+>;
+
+export const Tooltip: FC<ITooltipProps> = (props) => {
   const { controllerRef, children, ...restProps } = props;
 
-  const storeRef = useRef<TooltipStore>(new TooltipStore(restProps));
+  const store = useNewStore(TooltipStore, restProps);
+  const { show, hide } = store;
 
   if (controllerRef) {
-    controllerRef.current = storeRef.current.controller;
+    setController(store, controllerRef);
   }
 
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
@@ -26,13 +29,10 @@ export const Tooltip: FC<
 
   return (
     <TooltipStyled>
-      <div
-        onMouseEnter={storeRef.current.show}
-        onMouseLeave={storeRef.current.hide}
-        ref={setReferenceElement}>
+      <div onMouseEnter={show} onMouseLeave={hide} ref={setReferenceElement}>
         {children}
       </div>
-      <InnerTooltip store={storeRef.current} referenceElement={referenceElement} />
+      <InnerTooltip store={store} referenceElement={referenceElement} />
     </TooltipStyled>
   );
 };
@@ -55,7 +55,7 @@ const PopperedTooltip: FC<IPopperedTooltipProps> = observer((props) => {
 
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   const { placement } = store.props;
-  const { title, style } = store.state;
+  const { title } = store.state;
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
     strategy: 'fixed',
@@ -70,11 +70,7 @@ const PopperedTooltip: FC<IPopperedTooltipProps> = observer((props) => {
   });
 
   return (
-    <div
-      className={cn('tooltip', style)}
-      ref={setPopperElement}
-      style={styles.popper}
-      {...attributes.popper}>
+    <div className="tooltip" ref={setPopperElement} style={styles.popper} {...attributes.popper}>
       {title}
     </div>
   );

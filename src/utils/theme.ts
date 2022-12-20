@@ -20,7 +20,7 @@ const sizes = {
 
 const font = {
   family: {
-    base: 'Rubik, Noto Sans SC, sans-serif',
+    base: 'Rubik, sans-serif',
     monospace: `
     "sfmono-regular, menlo, monaco, consolas, 'Liberation Mono', 'Courier New'"
     `,

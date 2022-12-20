@@ -1,10 +1,10 @@
-import type { Point } from '../../../../helpers/point';
-import type { VisualComponent } from '../visual-component/visual-component-state.store';
+import type { IPoint } from '../../../../helpers/point';
+import type { IVisualComponent } from '../visual-component/visual-component-state.store';
 import type { NodeState } from './node-state.store';
 
 export interface INodeStateWithoutId {
   label?: string;
-  position: Point;
+  position: IPoint;
   type?: string;
   data?: unknown;
   isSelectionEnabled?: boolean;
@@ -25,7 +25,7 @@ export interface INodeState extends INodeStateWithoutId {
 
 export interface INodeStateDiff {
   label?: string | null;
-  position?: Point;
+  position?: IPoint;
   type?: string;
   data?: unknown;
   isSelectionEnabled?: boolean;
@@ -34,7 +34,7 @@ export interface INodeStateDiff {
 
 export interface INodeDefaultSettings {
   idk?: unknown;
-  InnerNode?: VisualComponent<{ node: NodeState }>;
+  InnerNode?: IVisualComponent<{ node: NodeState }>;
   removeDefaultClasses?: true;
   classes?: NodeDefaultSettingsByStates<string[]>;
   style?: NodeDefaultSettingsByStates<React.CSSProperties>;
