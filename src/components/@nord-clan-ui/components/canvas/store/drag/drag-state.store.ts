@@ -8,7 +8,7 @@ import { makeAutoObservable } from 'mobx';
 /**
  * Encapsulate logic for dragging mechanism. Right now only nodes are supposed to be dragged.
  */
-export class DragState {
+export class DragStateStore {
   private _nodesBeingDragged = new Set<NodeState>();
   private _remaindersFromDrags = new Map<string, IPoint | undefined>();
 

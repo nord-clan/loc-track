@@ -7,7 +7,7 @@ import { NodeSettingsStore } from './node/node-settings.store';
 import { DiagramStateStore } from './diagram/diagram-state.store';
 import { NodeStore } from './node/node.store';
 import { CallbacksStore } from './callbacks/callbacks.store';
-import { DragState } from './drag/drag-state.store';
+import { DragStateStore } from './drag/drag-state.store';
 import { SelectionStateStore } from './selection/selection-state.store';
 
 export class RootStore {
@@ -16,7 +16,7 @@ export class RootStore {
   private _nodeStore: NodeStore;
   private _nodeSettingsStore: NodeSettingsStore;
   private _callbacksStore: CallbacksStore;
-  private _dragStateStore: DragState;
+  private _dragStateStore: DragStateStore;
   private _selectionStateStore: SelectionStateStore;
 
   constructor() {
@@ -25,7 +25,7 @@ export class RootStore {
     this._nodeStore = new NodeStore(this);
     this._nodeSettingsStore = new NodeSettingsStore();
     this._callbacksStore = new CallbacksStore(this);
-    this._dragStateStore = new DragState();
+    this._dragStateStore = new DragStateStore(this.selectionState, this.callbacks);
     this._selectionStateStore = new SelectionStateStore();
   }
 
