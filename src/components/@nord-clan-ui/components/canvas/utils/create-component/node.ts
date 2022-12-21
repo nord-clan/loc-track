@@ -18,9 +18,9 @@ export const createTableNode = (settings?: INodeDefaultSettings) =>
 export const defaultSettings: INodeDefaultSettings = {
   InnerNode: NodeLabel
 };
-
 //* Types
 export enum NodeVarious {
+  Defafult = 'default',
   Table = 'table'
 }
 

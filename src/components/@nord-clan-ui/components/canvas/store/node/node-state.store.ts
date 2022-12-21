@@ -1,11 +1,11 @@
 import type { IPoint } from '../../../../helpers/point';
 import type { RootStore } from '../root.store';
 import type { PropertyChange } from '../callbacks/callbacks.store';
+import { NodeVarious } from '../../utils/create-component/node';
 import { makeAutoObservable, reaction } from 'mobx';
 import { addPoints, arePointsEqual } from '../../../../helpers/point';
 import { HtmlElement } from '../../ui/html-element';
 import { deepCopy, isBoolean } from '../../../../helpers/index';
-import { COMPONENT_DEFAULT_TYPE } from '../visual-component/visual-components.store';
 import { generateTransform } from '../../../../helpers/transformation';
 
 export class NodeState {
@@ -13,7 +13,7 @@ export class NodeState {
   private _label?: string;
   private _position: IPoint;
   private _ref: HtmlElement;
-  private _type?: string;
+  private _type?: NodeVarious;
   private _selected: boolean;
   private _hovered: boolean;
   private _data?: unknown;
@@ -80,7 +80,7 @@ export class NodeState {
   }
 
   get type(): string {
-    return this._type ?? COMPONENT_DEFAULT_TYPE;
+    return this._type ?? NodeVarious.Defafult;
   }
 
   get componentDefinition() {
@@ -173,7 +173,9 @@ export class NodeState {
     return remainder;
   };
 
-  setType = (value: string | null | undefined): PropertyChange<string | undefined> | undefined => {
+  setType = (
+    value: NodeVarious | null | undefined
+  ): PropertyChange<string | undefined> | undefined => {
     const change = this._setType(value);
 
     if (change) {
@@ -184,7 +186,7 @@ export class NodeState {
   };
 
   private _setType = (
-    value: string | null | undefined
+    value: NodeVarious | null | undefined
   ): PropertyChange<string | undefined> | undefined => {
     const valueToSet = value ?? undefined;
     if (this._type === valueToSet) {
@@ -358,7 +360,7 @@ function snapMoveByVector(pos: number, vec: number, snapValue: number) {
 export interface INodeStateWithoutId {
   label?: string;
   position: IPoint;
-  type?: string;
+  type?: NodeVarious;
   data?: unknown;
   isSelectionEnabled?: boolean;
   isDragEnabled?: boolean;
