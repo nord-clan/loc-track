@@ -1,20 +1,30 @@
 import type { FC, PropsWithChildren } from 'react';
-import type { BasePanelStore } from './panel.store';
+import type { PanelStore } from './panel.store';
 import { observer } from 'mobx-react-lite';
 import { PanelStyled } from './panel.style';
+import { useRef } from 'react';
+import useOutsideClick from '../../hooks/events/useOutsideClick';
 
 interface IPanelProps extends PropsWithChildren {
-  store: BasePanelStore;
+  store: PanelStore;
 }
 
 export const Panel: FC<IPanelProps> = observer((props) => {
   const { children, store } = props;
-  const { state, side } = store;
+  const { state, side, width, hideDialog } = store;
 
   const { isVisible } = state;
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(ref, () => {
+    if (isVisible) {
+      hideDialog();
+    }
+  });
+
   return (
-    <PanelStyled isVisible={isVisible} side={side}>
+    <PanelStyled ref={ref} isVisible={isVisible} side={side} width={width}>
       <section>{children}</section>
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">

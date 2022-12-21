@@ -46,24 +46,39 @@ export const HeaderStyled = styled.header`
     border-left: 1px solid ${({ theme }) => theme.palette.border.header};
     border-bottom: 1px solid ${({ theme }) => theme.palette.border.header};
 
-    width: 100px;
+    padding: 0 10px;
+    width: auto;
     height: 50px;
     border-radius: 0 0 0 25px;
 
     display: flex;
-    gap: 5px;
+    gap: 8px;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
     svg {
-      min-width: 22px;
-      min-height: 22px;
+      min-width: 20px;
+      min-height: 20px;
+      color: ${({ theme }) => theme.palette.color.header};
+      font-size: 1rem;
+
+      &:hover {
+        color: ${({ theme }) => theme.palette.bg.highlight};
+      }
+      transition: 0.1s ease-in-out color;
       cursor: pointer;
     }
-  }
-  * {
-    color: ${({ theme }) => theme.palette.color.header};
-    font-size: 1rem;
+
+    .profile {
+      border-left: 1px solid ${({ theme }) => theme.palette.border.header};
+
+      padding-left: 6px;
+
+      svg {
+        min-width: 34px;
+        min-height: 34px;
+      }
+    }
   }
 `;

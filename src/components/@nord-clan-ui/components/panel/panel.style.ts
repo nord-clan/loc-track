@@ -4,21 +4,20 @@ export type ISide = 'left' | 'right';
 
 interface IPanelStyledProps {
   isVisible: boolean;
-  width?: string;
+  width: string;
   side: ISide;
 }
 export const PanelStyled = styled.div<IPanelStyledProps>`
   position: fixed;
   ${({ side }) => `
-    ${side === 'left' ? 'right' : 'left'}: 0;
+    ${side}: 0;
   `}
   top: 0;
   display: flow-root;
   z-index: 5;
-
-  min-height: 100vh;
   height: 100%;
-  width: ${({ width }) => width || '300px'};
+
+  width: ${({ width }) => width};
   padding-top: ${({ theme }) => theme.sizes.header.height};
 
   transform: translateX(
@@ -28,10 +27,10 @@ export const PanelStyled = styled.div<IPanelStyledProps>`
       !isVisible
         ? side === 'left'
           ? `
-        calc(${width || '300px'} + 40px)
+        calc((${width} + 40px) * -1)
         `
           : `
-        calc((${width || '300px'} + 40px) * -1)
+        calc(${width} + 40px)
         `
         : '0'
     }
@@ -53,7 +52,7 @@ export const PanelStyled = styled.div<IPanelStyledProps>`
     top: ${({ theme }) => theme.sizes.header.height};
     transform: rotate(90deg);
     ${({ side }) => `
-      ${side === 'left' ? 'left: 0;' : 'right: -40px;'}
+      ${side === 'left' ? 'right: -39px;' : 'left: 1px;'}
     `}
     top: 0;
 
@@ -63,7 +62,7 @@ export const PanelStyled = styled.div<IPanelStyledProps>`
       width: 100vh;
       height: 40px;
       ${({ side }) => `
-        ${side === 'left' ? 'transform: rotate(-180deg);' : 'transform: rotate(0deg);'}
+        ${side === 'left' ? 'transform: rotate(0deg);' : 'transform: rotate(-180deg);'}
       `}
       fill: ${({ theme }) => theme.palette.bg.panel};
 

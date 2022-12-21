@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-underscore-dangle */
+import type { ReactNode } from 'react';
 import { configure } from 'mobx';
 import { enableStaticRendering } from 'mobx-react-lite';
-import type { ReactNode } from 'react';
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import { isClientSide, isDev, isServerSide } from '#/utils/env';
 import { IRootStore } from '#/store/root-store';
 

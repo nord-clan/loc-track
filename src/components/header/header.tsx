@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '#/store';
 import { HeaderStyled } from './header.style';
@@ -11,7 +10,10 @@ import type { ThemeVarious } from '#/contexts/theme';
 
 //* icons
 import { GiSun, GiNightSleep } from 'react-icons/gi';
-import { IoMdRainy, IoIosApps, IoIosAppstore } from 'react-icons/io';
+import { IoMdRainy } from 'react-icons/io';
+import { CgProfile } from 'react-icons/cg';
+import { BiSearchAlt } from 'react-icons/bi';
+import { MdEventNote } from 'react-icons/md';
 
 const themeIcon = new Map<ThemeVarious, JSX.Element>([
   ['light', <GiSun key={1} />],
@@ -22,7 +24,7 @@ const themeIcon = new Map<ThemeVarious, JSX.Element>([
 // Header component
 //* ------------------------------------------------------------------------------------------ *//
 const Header: FC = observer(() => {
-  const { appStore, leftPanelStore, rightPanelStore } = useStore();
+  const { appStore, rightPanelStore } = useStore();
   const {
     state: { theme },
     switchTheme
@@ -36,13 +38,16 @@ const Header: FC = observer(() => {
         </Link>
       </div>
       <div className="control">
-        <span onClick={leftPanelStore.switchVisible}>
-          <IoIosApps />
+        <span>
+          <BiSearchAlt />
         </span>
         <span onClick={rightPanelStore.switchVisible}>
-          <IoIosAppstore />
+          <MdEventNote />
         </span>
         <span onClick={switchTheme}>{themeIcon.get(theme)}</span>
+        <div className="profile">
+          <CgProfile />
+        </div>
       </div>
       {/* <Menu /> */}
     </HeaderStyled>

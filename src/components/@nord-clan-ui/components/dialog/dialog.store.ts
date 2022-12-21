@@ -34,8 +34,9 @@ export class BaseDialogStore {
   }
 
   setIsVisible = (isVisible: boolean): boolean => (this.state.isVisible = isVisible);
-
   setIsLock = (isLock: boolean): boolean => (this.state.isLock = isLock);
+
+  switchVisible = (): void => (this.state.isVisible ? this.hideDialog() : this.showDialog());
 
   lockDialog = (): void => {
     this.setIsLock(true);
