@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useEffect, useRef } from 'react';
-import { useCanvasStore } from '../store/useRootStore';
+import { useRootStore } from '../store/useRootStore';
 
 export function useCursor(
   active: boolean,
@@ -24,8 +24,8 @@ export function useCursor(
 }
 
 export function useDiagramCursor(active: boolean, cursor: React.CSSProperties['cursor']) {
-  const { diagramState } = useCanvasStore();
+  const { diagramState } = useRootStore();
   const ref = diagramState.ref.current;
 
-  useCursor(active, cursor, ref);
+  useCursor(active, cursor, ref as HTMLDivElement);
 }

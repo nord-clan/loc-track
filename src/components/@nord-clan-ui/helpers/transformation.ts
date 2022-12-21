@@ -1,7 +1,7 @@
-import type { Point } from './point';
+import type { IPoint } from './point';
 import { arePointsEqual } from './point';
 
-export const generateTransform = (translate: Point, scale?: number): string => {
+export const generateTransform = (translate: IPoint, scale?: number): string => {
   const translatePart = `translate(${translate[0]}px, ${translate[1]}px)`;
   if (scale) {
     const scalePart = `scale(${scale})`;
@@ -12,7 +12,7 @@ export const generateTransform = (translate: Point, scale?: number): string => {
 
 export interface ITransformation {
   zoom: number;
-  offset: Point;
+  offset: IPoint;
 }
 
 export const areTransformationsEqual = (a: ITransformation, b: ITransformation): boolean =>

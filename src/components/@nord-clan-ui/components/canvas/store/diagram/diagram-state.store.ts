@@ -3,25 +3,28 @@ import type {
   IInteractionTranslate,
   IInteractionTranslateAndZoom
 } from '../../../../hooks/interactions/common';
-import type { Point } from '../../../../helpers/point';
-import type { CanvasStore } from '../canvas.store';
+import type { IPoint } from '../../../../helpers/point';
+import type { RootStore } from '../root.store';
 import type { BoundingBox } from '../../../../helpers/index';
 import { addPoints, multiplyPoint, subtractPoints } from '../../../../helpers/point';
-import { HtmlElement } from '../../html-element';
+import { HtmlElement } from '../../ui/html-element';
 import { clampValue, deepCopy } from '../../../../helpers/index';
 import { makeAutoObservable } from 'mobx';
 
 export class DiagramStateStore implements IInteractionTranslateAndZoom, IInteractionTranslate {
+  private _clickPosition: IPoint;
+  private _isContextMenuVisible = false;
+
   private _zoom: number;
-  private _offset: Point;
+  private _offset: IPoint;
   private _ref: HtmlElement;
-  private _store: CanvasStore;
+  private _store: RootStore;
 
   private _renderImportedRequestId = -1;
 
-  constructor(canvasStore: CanvasStore) {
+  constructor(store: RootStore) {
     this._ref = new HtmlElement(null, this);
-    this._store = canvasStore;
+    this._store = store;
     this.import();
 
     makeAutoObservable<DiagramStateStore, '_store'>(this, {
@@ -51,7 +54,15 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
   zoomIn = () => this.zoomIntoCenter(1 / 0.8);
   zoomOut = () => this.zoomIntoCenter(0.8);
 
-  setOffset = (newOffset: Point | null | undefined) => {
+  setClickPosition = (newPosition: IPoint | null | undefined) => {
+    this._clickPosition = newPosition ?? [0, 0];
+  };
+
+  toggleContextMenuVisible = (isVisible: boolean) => {
+    this._isContextMenuVisible = isVisible;
+  };
+
+  setOffset = (newOffset: IPoint | null | undefined) => {
     this._offset = newOffset ?? [0, 0];
   };
 
@@ -59,12 +70,12 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
     this._zoom = clampValue(newZoom ?? 1, this._store.diagramSettings.zoomInterval);
   };
 
-  setTransformation = (newOffset: Point, newZoom: number) => {
+  setTransformation = (newOffset: IPoint, newZoom: number) => {
     this.setOffset(newOffset);
     this.setZoom(newZoom);
   };
 
-  zoomInto = (pointToZoomInto: Point, zoomMultiplicator: number) => {
+  zoomInto = (pointToZoomInto: IPoint, zoomMultiplicator: number) => {
     const newZoom = clampValue(
       this._zoom * zoomMultiplicator,
       this._store.diagramSettings.zoomInterval
@@ -78,13 +89,13 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
     this.setTransformation(subtractPoints(pointToZoomInto, pointDisplacementAfterZoom), newZoom);
   };
 
-  translate = (translateBy: Point) => {
+  translate = (translateBy: IPoint) => {
     this.setOffset(addPoints(this._offset, translateBy));
   };
 
   translateAndZoomInto = (
-    translateBy: Point,
-    pointToZoomInto: Point,
+    translateBy: IPoint,
+    pointToZoomInto: IPoint,
     zoomMultiplicator: number
   ) => {
     this.translate(translateBy);
@@ -109,6 +120,14 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
     return this._zoom;
   }
 
+  get isContextMenuVisible() {
+    return this._isContextMenuVisible;
+  }
+
+  get clickPosition() {
+    return this._clickPosition;
+  }
+
   getRenderedZoom(): number | null {
     const attr = this.ref.getDataAttribute('data-zoom');
     return attr ? Number(attr) : null;
@@ -118,7 +137,7 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
    * Get position on Diagram in its coordinates system (including zoom) by mouse/touch position.
    * @param pointerPosition position of mouse or finger on the screen
    */
-  getPositionByPointer = (pointerPosition: Point): Point => {
+  getPositionByPointer = (pointerPosition: IPoint): IPoint => {
     const diagRect = this.ref.current?.getBoundingClientRect();
     if (diagRect) {
       return multiplyPoint(
@@ -148,7 +167,7 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
   };
 
   private _getNodesBoundingBoxWithPadding = (): BoundingBox => {
-    const nodesBoundingBox = this._store.nodeStore.getNodesBoundingBox();
+    const nodesBoundingBox = this._store.node.getNodesBoundingBox();
     const { padding } = this._store.diagramSettings.zoomToFitSettings;
     nodesBoundingBox.topLeftCorner = subtractPoints(nodesBoundingBox.topLeftCorner, padding);
     nodesBoundingBox.bottomRightCorner = addPoints(nodesBoundingBox.bottomRightCorner, padding);
@@ -161,7 +180,7 @@ export class DiagramStateStore implements IInteractionTranslateAndZoom, IInterac
   };
 }
 
-function calculateNewZoomToFitBoundingBox(diagramSize: Point, boundingBox: BoundingBox) {
+function calculateNewZoomToFitBoundingBox(diagramSize: IPoint, boundingBox: BoundingBox) {
   // Zoom to fit the largest size, horizontal or vertical
   const newZoom = Math.min(
     diagramSize[0] / boundingBox.size[0],
@@ -171,7 +190,7 @@ function calculateNewZoomToFitBoundingBox(diagramSize: Point, boundingBox: Bound
 }
 
 function calculateOffsetToCenterBoundingBox(
-  diagramSize: Point,
+  diagramSize: IPoint,
   zoom: number,
   boundingBox: BoundingBox
 ) {
@@ -186,6 +205,6 @@ function calculateOffsetToCenterBoundingBox(
 }
 
 export interface IDiagramState {
-  offset: Point;
+  offset: IPoint;
   zoom: number;
 }

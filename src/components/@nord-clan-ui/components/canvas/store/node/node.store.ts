@@ -1,7 +1,7 @@
 import type { INodeExport, INodeState } from './node-state.store';
-import type { CanvasStore } from '../canvas.store';
+import type { RootStore } from '../root.store';
 import type { BoundingBox } from '../../../../helpers/index';
-import type { Point } from '../../../../helpers/point';
+import type { IPoint } from '../../../../helpers/point';
 import type { SuccessOrErrorResult } from '../../../../helpers/result';
 import {
   errorValueResult,
@@ -16,9 +16,9 @@ import { v4 } from 'uuid';
 
 export class NodeStore {
   private _nodes = new Map<string, NodeState>();
-  private _store: CanvasStore;
+  private _store: RootStore;
 
-  constructor(store: CanvasStore) {
+  constructor(store: RootStore) {
     this._store = store;
 
     makeAutoObservable(this);
@@ -144,8 +144,8 @@ export class NodeStore {
    * @returns Values are calculated without zoom taking into account, that is, the same as zoom would be '1'
    */
   getNodesBoundingBox = (): BoundingBox => {
-    let topLeftCorner: Point = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
-    let bottomRightCorner: Point = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
+    let topLeftCorner: IPoint = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
+    let bottomRightCorner: IPoint = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
 
     this._nodes.forEach((node) => {
       const pos = node.position;

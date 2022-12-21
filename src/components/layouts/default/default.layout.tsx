@@ -1,26 +1,23 @@
 import React, { useEffect } from 'react';
 import type { FC, PropsWithChildren } from 'react';
+import { useStore } from '#/store';
 
 //* Styles
 import { DefaultStyled } from '#/components/layouts/default/default.style';
 
 //* Components
-import { store } from '#/store';
 import Header from '#/components/header/header';
 
 // Default layout
 //* ------------------------------------------------------------------------------------------ *//
 const DefaultLayout: FC<PropsWithChildren> = ({ children }) => {
-  useEffect(() => {
-    store.appStore.updateViewport();
-    store.appStore.updateScroll();
+  const { appStore } = useStore();
 
-    window.onresize = () => {
-      store.appStore.updateViewport();
-    };
-    window.onscroll = () => {
-      store.appStore.updateScroll();
-    };
+  useEffect(() => {
+    appStore.updateViewport();
+    appStore.updateScroll();
+    window.onresize = () => appStore.updateViewport();
+    window.onscroll = () => appStore.updateScroll();
   }, []);
 
   return (

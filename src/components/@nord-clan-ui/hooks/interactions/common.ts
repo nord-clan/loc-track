@@ -1,4 +1,4 @@
-import type { Point } from '../../helpers/point';
+import type { IPoint } from '../../helpers/point';
 import type {
   AnyHandlerEventTypes,
   EventTypes,
@@ -51,16 +51,16 @@ export function canDragGestureBeTapInstead(movement: Vector2): boolean {
 }
 
 export interface IInteractionTranslate {
-  offset: Point;
-  setOffset: (newOffset: Point) => unknown;
+  offset: IPoint;
+  setOffset: (newOffset: IPoint) => unknown;
 }
 
 export interface IInteractionTranslateAndZoom {
-  offset: Point;
+  offset: IPoint;
   zoom: number;
   translateAndZoomInto: (
-    translateBy: Point,
-    pointToZoomInto: Point,
+    translateBy: IPoint,
+    pointToZoomInto: IPoint,
     changeZoomBy: number
   ) => unknown;
 }

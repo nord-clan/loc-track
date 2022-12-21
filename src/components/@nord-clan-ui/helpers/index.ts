@@ -1,15 +1,6 @@
-import type { FormStore } from '../components/form/form.store';
-import type { ControlStore } from '../components/control.store';
 import type { MutableRefObject } from 'react';
-import type { Point } from './point';
+import type { IPoint } from './point';
 import { v4 } from 'uuid';
-import { useEffect, useMemo, useRef } from 'react';
-
-export type BoundingBox = {
-  topLeftCorner: Point;
-  bottomRightCorner: Point;
-  size: Point;
-};
 
 export type TControllerRef<T> = MutableRefObject<T | undefined>;
 export type Size = 's' | 'm' | 'l';
@@ -20,55 +11,7 @@ export const getId = (): string => {
   return uuid;
 };
 
-export const setupFormStores = (stores: unknown[], form: FormStore): void => {
-  stores.forEach((store) => form.addStore(store as ControlStore<unknown>));
-};
-
-export const useNewStore = <T, P>(
-  Store: new (args: P) => T,
-  args: P = {} as P,
-  dependencies: [] = []
-): T => useMemo(() => new Store(args), dependencies);
-
-export const useGetController = <T>(store: { controller: T }): TControllerRef<T> => {
-  const controller = useRef<T>();
-  controller.current = store.controller;
-  return controller;
-};
-
-export const setController = <T>(store: { controller: T }, controllerRef: TControllerRef<T>): T => {
-  const { controller } = store;
-  controllerRef.current = controller;
-  return controller;
-};
-
-type WithApiRequestAbortDestructor = () => void;
-
-export const useEffectWithApiRequestAbort = <T>(
-  callback: (requestId: string, dependencies: T[]) => void | WithApiRequestAbortDestructor,
-  dependencies: T[],
-  returnCallback?: () => void
-): void => {
-  const requestId = useMemo(() => getId(), []);
-  useEffect(() => {
-    callback(requestId, dependencies);
-    return () => {
-      returnCallback?.();
-      //   ApiProxy.abort(requestId);
-    };
-  }, dependencies);
-};
-
-export const useRequestIdAbort = (): string => {
-  const requestId = useMemo(() => getId(), []);
-  useEffect(() => {
-    return () => {
-      //   ApiProxy.abort(requestId);
-    };
-  }, []);
-  return requestId;
-};
-
+//* ---- just helpers ------------------------------ * //
 export interface IDictionary<T> {
   [key: string]: T;
 }
@@ -85,7 +28,7 @@ export function isBoolean(value: unknown): value is boolean {
   return value != null && typeof value === 'boolean';
 }
 
-export function clampValue(value: number, interval: Point) {
+export function clampValue(value: number, interval: IPoint) {
   return Math.min(Math.max(value, interval[0]), interval[1]);
 }
 
@@ -98,3 +41,9 @@ export function combineArrays<T>(...arrays: (T[] | undefined)[]): T[] {
   arrays.forEach((a) => a?.forEach((v) => v && combined.push(v)));
   return combined;
 }
+
+export type BoundingBox = {
+  topLeftCorner: IPoint;
+  bottomRightCorner: IPoint;
+  size: IPoint;
+};

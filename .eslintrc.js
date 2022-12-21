@@ -69,7 +69,7 @@ module.exports = {
             disallowTypeAnnotations: false
           }
         ],
-        'import/no-cycle': 'warn',
+        'import/no-cycle': 'off',
         'react/prop-types': 'off',
         'no-param-reassign': 'off',
         'no-restricted-globals': 'off',
