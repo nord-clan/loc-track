@@ -3,7 +3,6 @@ import type { FC } from 'react';
 import Image from 'next/image';
 import { observer } from 'mobx-react-lite';
 import { LayoutLayerStyled } from './styles';
-// import Office from '../../../../../../../public/assets/office.svg';
 
 export const LayoutLayer: FC<{ transform: string }> = observer(({ transform }) => {
   return (

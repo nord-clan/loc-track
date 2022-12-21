@@ -82,7 +82,7 @@ export class DiagramSettingsStore {
 
 //* --- Default --- *//
 
-const defaultZoomInterval: IPoint = [0.1, 3];
+const defaultZoomInterval: IPoint = [0.5, 4];
 const defaultZoomToFitSettings: IZoomToFitSettings = {
   padding: [30, 30],
   zoomInterval: [0.1, 1.5],

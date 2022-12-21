@@ -31,6 +31,7 @@ export * from './components/canvas/ui/diagram/diagram-inner';
 
 //* - node - *//
 export * from './components/canvas/store/node/node-settings.store';
+export * from './components/canvas/utils/create-component/node';
 
 //* - panel - *//
 export * from './components/panel/panel';

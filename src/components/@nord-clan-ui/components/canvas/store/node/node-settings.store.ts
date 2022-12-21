@@ -1,23 +1,19 @@
 import type { IVisualComponentsObject } from '../visual-component/visual-components.store';
 import type { IPoint } from '../../../../helpers/point';
 import type { NodeState } from './node-state.store';
-import type {
-  IComponentDefinition,
-  IVisualComponentProps
-} from '../visual-component/visual-component-state.store';
+import type { IVisualComponentProps } from '../visual-component/visual-component-state.store';
 import {
   COMPONENT_DEFAULT_TYPE,
   VisualComponents
 } from '../visual-component/visual-components.store';
-import type { INodeDefaultSettings } from './node.interface';
 import { makeAutoObservable } from 'mobx';
-import { NodeDefault } from '../../ui/node/node-default';
-import { NodeLabel } from '../../ui/node/node-label';
+import { createDefaultNode, createTableNode, NodeVarious } from '../../utils/create-component/node';
 
 export class NodeSettingsStore {
   private _visualComponents: VisualComponents<INodeComponentSettings, INodeVisualComponentProps> =
     new VisualComponents<INodeComponentSettings, INodeVisualComponentProps>({
-      [COMPONENT_DEFAULT_TYPE]: this.createNodeDefault()
+      [COMPONENT_DEFAULT_TYPE]: createDefaultNode(),
+      [NodeVarious.Table]: createTableNode()
     });
   private _gridSnap: IPoint | null;
   constructor() {
@@ -47,18 +43,6 @@ export class NodeSettingsStore {
       this._gridSnap = gridSnap;
     }
   };
-
-  createNodeDefault(
-    settings?: INodeDefaultSettings
-  ): IComponentDefinition<INodeVisualComponentProps<INodeDefaultSettings>, INodeDefaultSettings> {
-    return {
-      Component: NodeDefault,
-      settings: {
-        InnerNode: NodeLabel,
-        ...settings
-      }
-    };
-  }
 }
 
 export interface INodeComponentSettings {

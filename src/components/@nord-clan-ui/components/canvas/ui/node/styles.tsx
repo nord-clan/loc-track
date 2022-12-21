@@ -13,6 +13,16 @@ export const NodeDefaultStyled = styled.div`
   align-items: center;
 `;
 
+//* --- NodeTable ------------------------------------------------------------ *//
+export const NodeTableStyled = styled.div`
+  width: 50px;
+  height: 90px;
+  border-radius: 4px;
+  opacity: 0.7;
+  background-color: ${({ theme }) => theme.palette.bg.mainContent};
+  border: ${({ theme }) => theme.palette.border.content} solid 1px;
+`;
+
 //* --- NodeLabel -------------------------------------------------------------- *//
 export const NodeLabelStyled = styled.div`
   padding: 5px 7px;

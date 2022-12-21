@@ -1,11 +1,12 @@
 import type { IPoint } from '../../../../helpers/point';
+import type { NodeVarious } from '../../utils/create-component/node';
 import type { IVisualComponent } from '../visual-component/visual-component-state.store';
 import type { NodeState } from './node-state.store';
 
 export interface INodeStateWithoutId {
   label?: string;
   position: IPoint;
-  type?: string;
+  type?: NodeVarious;
   data?: unknown;
   isSelectionEnabled?: boolean;
   isDragEnabled?: boolean;
@@ -26,7 +27,7 @@ export interface INodeState extends INodeStateWithoutId {
 export interface INodeStateDiff {
   label?: string | null;
   position?: IPoint;
-  type?: string;
+  type?: NodeVarious;
   data?: unknown;
   isSelectionEnabled?: boolean;
   isDragEnabled?: boolean;
