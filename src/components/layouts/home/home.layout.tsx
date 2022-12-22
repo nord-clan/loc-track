@@ -17,12 +17,17 @@ const HomeLayout: FC<PropsWithChildren> = ({ children }) => {
       <Panel store={rightPanelStore}>
         <PanelHeaderStyled>
           <CloseIcon onClick={() => rightPanelStore.setIsVisible(false)} />
+          <h4>События</h4>
         </PanelHeaderStyled>
         <PanelContentStyled>
-          <div className="events">
-            <div>прощедшие</div>
-            <div>активные</div>
-            <div>планируемые</div>
+          <div className="panel-content">
+            <hr />
+            <div className="events">
+              <div className="past">прошедшие</div>
+              <div className="active">активные</div>
+              <div className="future">планируемые</div>
+            </div>
+            <hr />
           </div>
         </PanelContentStyled>
       </Panel>
